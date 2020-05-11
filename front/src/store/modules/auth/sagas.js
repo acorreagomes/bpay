@@ -6,11 +6,11 @@ import api from '~/services/api';
 import { signInSucess } from './actions';
 
 export function* signIn({ payload }) {
-  const { email, senha } = payload;
+  const { email, senha } = payload.email;
 
   const response = yield call(api.post, 'sessions', {
-    email: 'acorreagomes@gmail.com',
-    senha: 'senha1',
+    email,
+    senha,
   });
 
   const { token, usuario } = response.data;

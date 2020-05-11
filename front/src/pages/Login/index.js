@@ -23,12 +23,12 @@ export default function Login() {
   }
   return (
     <>
-      <img src={Logo} alt="EasyControl" />
+      <img src={Logo} alt="bPay" />
       <Form schema={schema} onSubmit={handleSubmit}>
         <text>Ola, Seja Bem-Vindo(a)</text>
         <text>Entre com suas credenciais.</text>
         <Input name="email" type="email" placeholder="Digite seu e-mail" />
-        <Input name="senha" type="senha" placeholder="Digite sua senha" />
+        <Input name="senha" type="password" placeholder="Digite sua senha" />
         <button type="submit">Entrar</button>
         <Link to="/dashboard">Cadastrar-me</Link>
         <Link to="/dashboard">Esqueci minha senha</Link>
