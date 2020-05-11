@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -17,6 +17,7 @@ export default function Login() {
   });
 
   const dispatch = useDispatch();
+  const loading = useSelector((state) => state.auth.loading);
 
   function handleSubmit(email, senha) {
     dispatch(signInRequest(email, senha));
@@ -29,7 +30,7 @@ export default function Login() {
         <text>Entre com suas credenciais.</text>
         <Input name="email" type="email" placeholder="Digite seu e-mail" />
         <Input name="senha" type="password" placeholder="Digite sua senha" />
-        <button type="submit">Entrar</button>
+        <button type="submit">{loading ? 'Logando...' : 'Entrar'}</button>
         <Link to="/dashboard">Cadastrar-me</Link>
         <Link to="/dashboard">Esqueci minha senha</Link>
       </Form>
