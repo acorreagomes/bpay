@@ -17,7 +17,7 @@ class UsuarioController {
 
     const emailExists = await Usuario.findOne({ where: { email: req.body.email } });
     if (emailExists) {
-      return res.status(400).json({ error: 'Duplicidade de Emails' });
+      return res.status(200).json({ error: 'Este email já está sendo usado!' });
     }
 
     const { id, nome, email, admin } = await Usuario.create(req.body);

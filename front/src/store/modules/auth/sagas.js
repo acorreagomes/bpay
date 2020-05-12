@@ -8,7 +8,7 @@ import { signInSucess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
   try {
-    const { email, senha } = payload.email;
+    const { email, senha } = payload;
 
     const response = yield call(api.post, 'sessions', {
       email,
@@ -16,6 +16,9 @@ export function* signIn({ payload }) {
     });
 
     const { token, usuario } = response.data;
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+
     yield put(signInSucess(token, usuario));
     history.push('/dashboard');
   } catch (error) {
@@ -24,4 +27,39 @@ export function* signIn({ payload }) {
   }
 }
 
-export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);
+export function* signUp({ payload }) {
+  try {
+    const { nome, email, senha } = payload;
+
+    const response = yield call(api.post, 'usuarios', {
+      nome,
+      email,
+      senha,
+    });
+    if (response.data.error) {
+      toast.error(response.data.error);
+    } else {
+      toast.success('Usuário cadastrado com sucesso!');
+      history.push('/');
+    }
+  } catch (error) {
+    toast.error('Falha no cadastro, Verifique seus dados!');
+    yield put(signFailure());
+  }
+}
+
+export function setToken({ payload }) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+}
+
+export default all([
+  takeLatest('persist/REHYDRATE', setToken),
+  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+]);

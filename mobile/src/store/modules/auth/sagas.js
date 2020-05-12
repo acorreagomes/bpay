@@ -36,6 +36,6 @@ export function setToken({ payload }) {
 }
 
 export default all([
-  takeLatest('@auth/REHYDRATE', setToken),
+  takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
 ]);

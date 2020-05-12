@@ -19,7 +19,7 @@ export default function Login() {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.auth.loading);
 
-  function handleSubmit(email, senha) {
+  function handleSubmit({ email, senha }) {
     dispatch(signInRequest(email, senha));
   }
   return (
@@ -31,8 +31,7 @@ export default function Login() {
         <Input name="email" type="email" placeholder="Digite seu e-mail" />
         <Input name="senha" type="password" placeholder="Digite sua senha" />
         <button type="submit">{loading ? 'Logando...' : 'Entrar'}</button>
-        <Link to="/dashboard">Cadastrar-me</Link>
-        <Link to="/dashboard">Esqueci minha senha</Link>
+        <Link to="/registrar">Crie sua Conta</Link>
       </Form>
     </>
   );
