@@ -60,7 +60,7 @@ export const Profile = styled.div`
   }
 
   img {
-    height: 32px;
+    height: 45px;
     border-radius: 50px;
   }
 `;

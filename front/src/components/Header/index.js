@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Logo from '~/assets/ticket.png';
+import User from '~/assets/user.png';
+
 import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Content, Profile } from './styles';
@@ -11,6 +13,7 @@ import { Container, Content, Profile } from './styles';
 export default function Header() {
   const dispatch = useDispatch();
   const usuarioLogado = useSelector((state) => state.user.profile.nome);
+  const usuario = usuarioLogado.split(' ').slice(0, 2).join(' ');
   function handleLoggout() {
     dispatch(signOut());
   }
@@ -25,14 +28,11 @@ export default function Header() {
         <aside>
           <Profile>
             <div>
-              <strong>{usuarioLogado}</strong>
+              <strong>{usuario}</strong>
               <Link to="/profile">Meu Perfil</Link>
               <Link onClick={handleLoggout}> Sair</Link>
             </div>
-            <img
-              src="https://api.adorable.io/avatars/50/abott@adorable.png"
-              alt="avatarProfile"
-            />
+            <img src={User} alt="avatarProfile" />
           </Profile>
         </aside>
       </Content>
