@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
-import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DeviceInfo from 'react-native-device-info';
 import Background from '~/components/Background';
@@ -11,6 +10,7 @@ import ListaTiposPagamentoCredito from '~/components/TiposPagamentoCredito';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
 import Imagens from '~/constants/Images';
+import Loading from '~/components/Loading';
 
 export default function TipoPagamentoCredito({ navigation }) {
   const data = navigation.getParam('data');
@@ -181,16 +181,6 @@ export default function TipoPagamentoCredito({ navigation }) {
         </Modal>
         </View>
 
-      <View style={styles.containerLoading}>
-          <Spinner
-            visible={loading}
-            textContent={mensagemLoading}
-            overlayColor="rgba(255,255,255,0.9)"
-            textStyle={styles.spinnerTextStyle}
-            color={Colors.COLORS.BLACK}
-          />
-        </View>
-
         <View style={styles.Container}>
         <Modal
           isVisible={isPerguntaModalVisible}
@@ -224,6 +214,7 @@ export default function TipoPagamentoCredito({ navigation }) {
           </View>
         </Modal>
       </View>
+      <Loading loading={loading} message={mensagemLoading} />
     </Background>
   );
 }

@@ -5,7 +5,6 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import NfcManager, { NfcEvents } from 'react-native-nfc-manager';
-import Spinner from 'react-native-loading-spinner-overlay';
 import AnimatedLoader from 'react-native-animated-loader';
 import api from '~/services/api';
 import Background from '~/components/Background';
@@ -13,6 +12,8 @@ import { signOut } from '~/store/modules/auth/actions';
 import Funcoes from '~/utils/Funcoes';
 import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
+import Loading from '~/components/Loading';
+import Mensagens from '~/components/Mensagens';
 
 export default function Principal({ navigation }) {
   const usuarioLogado = useSelector(state => state.auth.userNameLogged);
@@ -130,21 +131,6 @@ export default function Principal({ navigation }) {
     }
   }
 
-  // useEffect(() => {
-  // let mounted = true;
-  // NfcManager.start();
-  // NfcManager.setEventListener(NfcEvents.DiscoverTag, tag => {
-  //   if (mounted) {
-  //     handleNumeroChip(tag);
-  //   }
-  // });
-  // return () => (mounted = false);
-  // return function cleanup() {
-  //   NfcManager.unregisterTagEvent().catch(() => 0);
-  //   mounted = false;
-  // };
-  // });
-
   useEffect(() => {
     NfcManager.start();
     NfcManager.setEventListener(NfcEvents.DiscoverTag, tag => {
@@ -239,53 +225,6 @@ export default function Principal({ navigation }) {
         </View>
       </View>
 
-      <View loading={loading} style={styles.Container}>
-        <Spinner
-          visible={loading}
-          textContent={mensagemLoading}
-          overlayColor="rgba(255,255,255,0.9)"
-          textStyle={styles.SpinnerTextStyle}
-          color={Colors.COLORS.BLACK}
-        />
-      </View>
-
-      <View style={styles.Container}>
-        <Modal
-          isVisible={isModalDialogVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image
-              style={styles.ImageMessage}
-              source={dialogType ? Imagens.SAD : Imagens.HAPPY}
-            />
-            <Text style={styles.TextMessage}>{dialogMessage}</Text>
-
-            <TouchableOpacity
-              style={{
-                margin: 10,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                backgroundColor: dialogType
-                  ? Colors.COLORS.BUTTON_ERROR
-                  : Colors.COLORS.BUTTON_SUCESS,
-              }}
-              onPress={() => handleModal()}
-            >
-              <Text style={styles.TextButton}>Fechar</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
-
       <View style={{ flex: 1 }}>
         <Modal
           isVisible={isNFCVisible}
@@ -318,6 +257,12 @@ export default function Principal({ navigation }) {
           </View>
         </Modal>
       </View>
+      <Mensagens
+        type={dialogType}
+        visible={isModalDialogVisible}
+        message={dialogMessage}
+      />
+      <Loading loading={loading} message={mensagemLoading} />
     </Background>
   );
 }
@@ -393,9 +338,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     backgroundColor: Colors.COLORS.BUTTON_ERROR,
-  },
-  SpinnerTextStyle: {
-    color: Colors.COLORS.WHITE,
   },
   Container: {
     justifyContent: 'center',

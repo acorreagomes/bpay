@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import RelatoriosComponente from '~/components/Relatorios';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
+import Loading from '~/components/Loading';
 
 export default function Relatorios({ navigation }) {
   const id_evento = navigation.getParam('id_evento');
@@ -106,17 +106,7 @@ export default function Relatorios({ navigation }) {
             </Container>
           </View>
         </View>
-
-        <View style={styles.containerLoading}>
-          <Spinner
-            visible={isLoadingVisible}
-            textContent={mensagemLoading}
-            overlayColor="rgba(255,255,255,0.9)"
-            textStyle={styles.spinnerTextStyle}
-            color={Colors.COLORS.BLACK}
-          />
-        </View>
-
+        <Loading loading={isLoadingVisible} message={mensagemLoading} />
     </Background>
   );
 }
@@ -219,9 +209,6 @@ const styles = StyleSheet.create({
     borderColor: Colors.COLORS.GRAY,
     width: '95%',
     margin: 10,
-  },
-  spinnerTextStyle: {
-    color: Colors.COLORS.BLACK,
   },
   buttonClose: {
     flex: 1,

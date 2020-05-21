@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
-import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Funcoes from '~/utils/Funcoes';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
+import Loading from '~/components/Loading';
 
 export default function DadosEvento({ navigation }) {
   const [isLoadingVisible, setLoadingVisible] = useState(false);
@@ -309,16 +309,7 @@ export default function DadosEvento({ navigation }) {
           </View>
         </Modal>
       </View>
-
-      <View style={styles.containerLoading}>
-        <Spinner
-          visible={isLoadingVisible}
-          textContent={mensagemLoading}
-          overlayColor="rgba(255,255,255,0.9)"
-          textStyle={styles.spinnerTextStyle}
-          color={Colors.COLORS.BLACK}
-        />
-      </View>
+      <Loading loading={isLoadingVisible} message={mensagemLoading} />
     </Background>
   );
 }

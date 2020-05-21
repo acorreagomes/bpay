@@ -3,13 +3,13 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
-import Spinner from 'react-native-loading-spinner-overlay';
 import DeviceInfo from 'react-native-device-info';
 import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
 import Colors from '~/constants/Colors';
 import Imagens from '~/constants/Images';
+import Loading from '~/components/Loading';
 
 export default function TransacoesCreditoValorPagamento({ navigation }) {
   const data = navigation.getParam('data');
@@ -188,16 +188,6 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
         </View>
       </View>
 
-      <View loading={loading} style={styles.Container}>
-        <Spinner
-          visible={loading}
-          textContent="Efetuando Recarga..."
-          overlayColor="rgba(255,255,255,0.9)"
-          textStyle={styles.SpinnerTextStyle}
-          color="#000"
-        />
-      </View>
-
       <View style={styles.Container}>
         <Modal
           isVisible={isModalDialogVisible}
@@ -268,6 +258,7 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
           </View>
         </Modal>
       </View>
+      <Loading loading={loading} message="Efetuando Recarga..." />
     </Background>
   );
 }

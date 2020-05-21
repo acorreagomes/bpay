@@ -5,6 +5,7 @@ import Background from '~/components/Background';
 import { Container, Form, FormInput } from './styles';
 import Colors from '~/constants/Colors';
 import Imagens from '~/constants/Images';
+import Loading from '~/components/Loading';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
@@ -13,11 +14,13 @@ export default function Login({ navigation }) {
   const passwordRef = useRef();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [loading, setLoading] = useState(false);
 
   function handleSubmit() {
     if (!email || !senha) {
       alert('Informe seu Email e Senha');
     } else {
+      setLoading(true);
       dispatch(signInRequest(email, senha));
     }
   }
@@ -55,6 +58,7 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
         </Form>
       </Container>
+      <Loading loading={loading} message="Validando credenciais..." />
     </Background>
   );
 }

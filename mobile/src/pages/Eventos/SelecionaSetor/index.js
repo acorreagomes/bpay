@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import Setores from '~/components/Setores';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
+import Loading from '~/components/Loading';
 
 export default function SelecionaSetor({ navigation }) {
   const data = navigation.getParam('data');
@@ -58,16 +58,7 @@ export default function SelecionaSetor({ navigation }) {
           </Container>
         </View>
       </View>
-
-      <View style={styles.containerLoading}>
-        <Spinner
-          visible={isLoadingVisible}
-          textContent={mensagemLoading}
-          overlayColor="rgba(255,255,255,0.9)"
-          textStyle={styles.spinnerTextStyle}
-          color={Colors.COLORS.BLACK}
-        />
-      </View>
+      <Loading loading={isLoadingVisible} message={mensagemLoading} />
     </Background>
   );
 }

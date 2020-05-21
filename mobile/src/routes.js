@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import Principal from './pages/Principal';
 import Configuracoes from './pages/Configuracoes';
 import ConsultaCartao from './pages/Cartao';
-import Dialogs from './pages/Dialogs';
 import TransacoesDebito from './pages/Transacoes/Debito';
 import DadosEvento from './pages/Eventos/DadosEvento';
 import SelecionaEvento from './pages/Eventos/SelecionaEvento';
@@ -22,7 +21,6 @@ export default (logado = false) =>
       {
         Login: createSwitchNavigator({
           Login,
-          Dialogs,
         }),
         App: {
           screen: createStackNavigator(
