@@ -35,78 +35,78 @@ export default function Relatorios({ navigation }) {
 
   return (
     <Background>
-        <View style={styles.ContainerValores}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.textTitle}>RECARGAS</Text>
-            <View style={styles.linhaSeparacao} />
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
-            >
-              <View>
-                <Text style={styles.TextTitulo}>Crédito</Text>
-                <Text style={styles.TextValores}>
-                  {Number(totalizadores.TotalRecargasCredito).toFixed(2)}
-                </Text>
-              </View>
-              <View>
-                <Text style={styles.TextTitulo}>Débito</Text>
-                <Text style={styles.TextValores}>
-                  {Number(totalizadores.TotalRecargasDebito).toFixed(2)}
-                </Text>
-              </View>
-              <View>
-                <Text style={styles.TextTitulo}>Dinheiro</Text>
-                <Text style={styles.TextValores}>
-                  {Number(totalizadores.TotalRecargasDinheiro).toFixed(2)}
-                </Text>
-              </View>
+      <View style={styles.ContainerValores}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.textTitle}>RECARGAS</Text>
+          <View style={styles.linhaSeparacao} />
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
+          >
+            <View>
+              <Text style={styles.TextTitulo}>Crédito</Text>
+              <Text style={styles.TextValores}>
+                {Number(totalizadores.TotalRecargasCredito).toFixed(2)}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.TextTitulo}>Débito</Text>
+              <Text style={styles.TextValores}>
+                {Number(totalizadores.TotalRecargasDebito).toFixed(2)}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.TextTitulo}>Dinheiro</Text>
+              <Text style={styles.TextValores}>
+                {Number(totalizadores.TotalRecargasDinheiro).toFixed(2)}
+              </Text>
             </View>
           </View>
         </View>
+      </View>
 
-        <View style={styles.ContainerValores}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.textTitle}>TOTALIZADORES</Text>
-            <View style={styles.linhaSeparacao} />
-            <View
-              style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
-            >
-              <View>
-                <Text style={styles.TextTitulo}>Recargas</Text>
-                <Text style={styles.TextValores}>
-                  {Number(totalizadores.TotalRecargas).toFixed(2)}
-                </Text>
-              </View>
-              <View>
-                <Text style={styles.TextTitulo}>Vendas</Text>
-                <Text style={styles.TextValores}>
-                  {Number(totalizadores.TotalVendas).toFixed(2)}
-                </Text>
-              </View>
-              <View>
-                <Text style={styles.TextTitulo}>Saldo</Text>
-                <Text style={styles.TextValores}>
-                  {Number(totalizadores.SaldoRestante).toFixed(2)}
-                </Text>
-              </View>
+      <View style={styles.ContainerValores}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.textTitle}>TOTALIZADORES</Text>
+          <View style={styles.linhaSeparacao} />
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
+          >
+            <View>
+              <Text style={styles.TextTitulo}>Recargas</Text>
+              <Text style={styles.TextValores}>
+                {Number(totalizadores.TotalRecargas).toFixed(2)}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.TextTitulo}>Vendas</Text>
+              <Text style={styles.TextValores}>
+                {Number(totalizadores.TotalVendas).toFixed(2)}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.TextTitulo}>Saldo</Text>
+              <Text style={styles.TextValores}>
+                {Number(totalizadores.SaldoRestante).toFixed(2)}
+              </Text>
             </View>
           </View>
         </View>
+      </View>
 
-        <View style={styles.ContainerSetores}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.textTitle}>VENDAS POR SETOR</Text>
-            <View style={styles.linhaSeparacao} />
-            <Container>
-              <List
-                data={totalizadores.TotalVendaSetores}
-                keyExtractor={item => String(item.id_setor)}
-                renderItem={({ item }) => <RelatoriosComponente data={item} />}
-              />
-            </Container>
-          </View>
+      <View style={styles.ContainerSetores}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.textTitle}>VENDAS POR SETOR</Text>
+          <View style={styles.linhaSeparacao} />
+          <Container>
+            <List
+              data={totalizadores.TotalVendaSetores}
+              keyExtractor={item => String(item.id_setor)}
+              renderItem={({ item }) => <RelatoriosComponente data={item} />}
+            />
+          </Container>
         </View>
-        <Loading loading={isLoadingVisible} message={mensagemLoading} />
+      </View>
+      <Loading loading={isLoadingVisible} message={mensagemLoading} />
     </Background>
   );
 }
@@ -123,8 +123,7 @@ Relatorios.navigationOptions = ({ navigation }) => ({
     </TouchableOpacity>
   ),
   headerRight: () => (
-    <TouchableOpacity
-      onPress={() => {}}>
+    <TouchableOpacity onPress={() => { }}>
       <Icon name="search" size={30} color={Colors.COLORS.WHITE} />
     </TouchableOpacity>
   ),

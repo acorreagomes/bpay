@@ -37,10 +37,6 @@ export default function Principal({ navigation }) {
     setIsModalDialogVisible(true);
   }
 
-  function handleModal() {
-    setIsModalDialogVisible(false);
-  }
-
   function handleLoading(loadingVisible, aMensageLoading) {
     setmensagemLoading(aMensageLoading);
     setLoading(loadingVisible);
@@ -261,6 +257,7 @@ export default function Principal({ navigation }) {
         type={dialogType}
         visible={isModalDialogVisible}
         message={dialogMessage}
+        close={() => setIsModalDialogVisible(false)}
       />
       <Loading loading={loading} message={mensagemLoading} />
     </Background>

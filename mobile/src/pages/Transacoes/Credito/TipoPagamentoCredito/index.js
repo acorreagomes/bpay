@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
-import Modal from 'react-native-modal';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DeviceInfo from 'react-native-device-info';
 import Background from '~/components/Background';
@@ -9,8 +8,9 @@ import Funcoes from '~/utils/Funcoes';
 import ListaTiposPagamentoCredito from '~/components/TiposPagamentoCredito';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
-import Imagens from '~/constants/Images';
 import Loading from '~/components/Loading';
+import Mensagens from '~/components/Mensagens';
+import Pergunta from '~/components/Pergunta';
 
 export default function TipoPagamentoCredito({ navigation }) {
   const data = navigation.getParam('data');
@@ -23,7 +23,7 @@ export default function TipoPagamentoCredito({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [tipoPagamentoSelecionado, setTipoPagamentoSelecionado] = useState('');
   const [descricaoSelecionada, setDescricaoSelecionada] = useState('');
-  const [isModalDialogVisible, setIsModalDialogVisible] = useState(false);
+  const [isDialogVisible, setisDialogVisible] = useState(false);
   const [isPerguntaModalVisible, setPerguntaModalVisible] = useState(false);
   const [dialogType, setDialogType] = useState('');
   const [dialogMessage, setDialogMessage] = useState('');
@@ -40,28 +40,12 @@ export default function TipoPagamentoCredito({ navigation }) {
   function showMessage(Message, DialogType = '') {
     setDialogType(DialogType);
     setDialogMessage(Message);
-    setIsModalDialogVisible(true);
+    setisDialogVisible(true);
   }
 
   function handleModalPergunta(aQuestionMessage) {
     setQuestionMessage(aQuestionMessage);
     setPerguntaModalVisible(true);
-  }
-
-  function handleModalResposta(Response) {
-    if (Response) {
-      setLoading(true);
-      ExecutaLancamento();
-    }
-    setPerguntaModalVisible(false);
-  }
-
-  function handleModal() {
-    if (!dialogType) {
-      navigation.navigate('Principal');
-    } else {
-      setIsModalDialogVisible(false);
-    }
   }
 
   async function ExecutaLancamento() {
@@ -94,6 +78,22 @@ export default function TipoPagamentoCredito({ navigation }) {
     }
   }
 
+  function handleModalResposta(Response) {
+    if (Response) {
+      setLoading(true);
+      ExecutaLancamento();
+    }
+    setPerguntaModalVisible(false);
+  }
+
+  function handleModal() {
+    if (!dialogType) {
+      navigation.navigate('Principal');
+    } else {
+      setisDialogVisible(false);
+    }
+  }
+
   function handleTipoPagamento(item) {
     if (item.id === 1) {
       setTipoPagamentoSelecionado('V');
@@ -101,7 +101,9 @@ export default function TipoPagamentoCredito({ navigation }) {
       setTipoPagamentoSelecionado('P');
     }
     setDescricaoSelecionada(item.descricao);
-    handleModalPergunta(`Forma de Pagamento \n\n ${item.descricao}\n\n Confirma ?`)
+    handleModalPergunta(
+      `Forma de Pagamento \n\n ${item.descricao}\n\n Confirma ?`
+    );
   }
 
   useEffect(() => {
@@ -117,7 +119,9 @@ export default function TipoPagamentoCredito({ navigation }) {
         ListaTiposPagamento.push({
           id: i,
           descricao: `${i} x R$ ${valorParcelaJuros.toFixed(2)}`,
-          detalhes: `(Parcela R$ ${valorParcelas.toFixed(2)}) + (Taxa Cartão R$ ${valorJuros.toFixed(2)})`,
+          detalhes: `(Parcela R$ ${valorParcelas.toFixed(
+            2
+          )}) + (Taxa Cartão R$ ${valorJuros.toFixed(2)})`,
         });
       }
       setLoading(false);
@@ -143,77 +147,18 @@ export default function TipoPagamentoCredito({ navigation }) {
           </Container>
         </View>
       </View>
-
-      <View style={styles.Container}>
-        <Modal
-          isVisible={isModalDialogVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image
-              style={styles.ImageMessage}
-              source={dialogType ? Imagens.SAD : Imagens.HAPPY}
-            />
-            <Text style={styles.TextMessage}>{dialogMessage}</Text>
-
-            <TouchableOpacity
-              style={{
-                margin: 10,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                backgroundColor: dialogType
-                  ? Colors.COLORS.BUTTON_ERROR
-                  : Colors.COLORS.BUTTON_SUCESS,
-              }}
-              onPress={() => handleModal()}
-            >
-              <Text style={styles.TextButton}>Fechar</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-        </View>
-
-        <View style={styles.Container}>
-        <Modal
-          isVisible={isPerguntaModalVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image style={styles.ImageMessage} source={Imagens.THINK} />
-            <Text style={styles.TextMessage}>{questionMessage}</Text>
-
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                style={styles.buttonCancelar}
-                onPress={() => handleModalResposta(false)}
-              >
-                <Text style={styles.TextButton}>Não</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.buttonConfirmar}
-                onPress={() => handleModalResposta(true)}
-              >
-                <Text style={styles.TextButton}>Sim</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </View>
+      <Pergunta
+        visible={isPerguntaModalVisible}
+        message={questionMessage}
+        close={() => handleModalResposta(false)}
+        confirm={() => handleModalResposta(true)}
+      />
+      <Mensagens
+        type={dialogType}
+        visible={isDialogVisible}
+        message={dialogMessage}
+        close={() => handleModal()}
+      />
       <Loading loading={loading} message={mensagemLoading} />
     </Background>
   );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
-import Modal from 'react-native-modal';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import DeviceInfo from 'react-native-device-info';
@@ -8,8 +7,9 @@ import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
 import Colors from '~/constants/Colors';
-import Imagens from '~/constants/Images';
 import Loading from '~/components/Loading';
+import Mensagens from '~/components/Mensagens';
+import Pergunta from '~/components/Pergunta';
 
 export default function TransacoesCreditoValorPagamento({ navigation }) {
   const data = navigation.getParam('data');
@@ -21,11 +21,17 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
   const [valorDinheiro, setValorDinheiro] = useState(0);
   const [valorTroco, setValorTroco] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [isModalDialogVisible, setIsModalDialogVisible] = useState(false);
+  const [isDialogVisible, setisDialogVisible] = useState(false);
   const [isPerguntaModalVisible, setPerguntaModalVisible] = useState(false);
   const [dialogType, setDialogType] = useState('');
   const [dialogMessage, setDialogMessage] = useState('');
   const [questionMessage, setQuestionMessage] = useState('');
+
+  function showMessage(Message, DialogType = '') {
+    setDialogType(DialogType);
+    setDialogMessage(Message);
+    setisDialogVisible(true);
+  }
 
   function handleModalPergunta(aQuestionMessage) {
     if (!valorTransacao || valorTransacao <= 0) {
@@ -45,28 +51,6 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
     } else {
       setQuestionMessage(aQuestionMessage);
       setPerguntaModalVisible(true);
-    }
-  }
-
-  function handleModalResposta(Response) {
-    if (Response) {
-      setLoading(true);
-      ExecutaLancamento();
-    }
-    setPerguntaModalVisible(false);
-  }
-
-  function showMessage(Message, DialogType = '') {
-    setDialogType(DialogType);
-    setDialogMessage(Message);
-    setIsModalDialogVisible(true);
-  }
-
-  function handleModal() {
-    if (!dialogType) {
-      navigation.navigate('Principal');
-    } else {
-      setIsModalDialogVisible(false);
     }
   }
 
@@ -95,6 +79,22 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
       setLoading(false);
     } catch (error) {
       alert(error);
+    }
+  }
+
+  function handleModalResposta(Response) {
+    if (Response) {
+      setLoading(true);
+      ExecutaLancamento();
+    }
+    setPerguntaModalVisible(false);
+  }
+
+  function handleModal() {
+    if (!dialogType) {
+      navigation.navigate('Principal');
+    } else {
+      setisDialogVisible(false);
     }
   }
 
@@ -187,77 +187,18 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.Container}>
-        <Modal
-          isVisible={isModalDialogVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image
-              style={styles.ImageMessage}
-              source={dialogType ? Imagens.SAD : Imagens.HAPPY}
-            />
-            <Text style={styles.TextMessage}>{dialogMessage}</Text>
-
-            <TouchableOpacity
-              style={{
-                margin: 10,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                backgroundColor: dialogType
-                  ? Colors.COLORS.BUTTON_ERROR
-                  : Colors.COLORS.BUTTON_SUCESS,
-              }}
-              onPress={() => handleModal()}
-            >
-              <Text style={styles.TextButton}>Fechar</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
-
-      <View style={styles.Container}>
-        <Modal
-          isVisible={isPerguntaModalVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image style={styles.ImageMessage} source={Imagens.THINK} />
-            <Text style={styles.TextMessage}>{questionMessage}</Text>
-
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                style={styles.buttonCancelar}
-                onPress={() => handleModalResposta(false)}
-              >
-                <Text style={styles.TextButton}>Não</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.buttonConfirmar}
-                onPress={() => handleModalResposta(true)}
-              >
-                <Text style={styles.TextButton}>Sim</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </View>
+      <Pergunta
+        visible={isPerguntaModalVisible}
+        message={questionMessage}
+        close={() => handleModalResposta(false)}
+        confirm={() => handleModalResposta(true)}
+      />
+      <Mensagens
+        type={dialogType}
+        visible={isDialogVisible}
+        message={dialogMessage}
+        close={() => handleModal()}
+      />
       <Loading loading={loading} message="Efetuando Recarga..." />
     </Background>
   );

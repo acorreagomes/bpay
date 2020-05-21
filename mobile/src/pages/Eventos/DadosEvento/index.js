@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   TextInput,
 } from 'react-native';
@@ -13,16 +12,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Funcoes from '~/utils/Funcoes';
 import api from '~/services/api';
 import Background from '~/components/Background';
-import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
 import Loading from '~/components/Loading';
+import Mensagens from '~/components/Mensagens';
+import Pergunta from '~/components/Pergunta';
 
 export default function DadosEvento({ navigation }) {
   const [isLoadingVisible, setLoadingVisible] = useState(false);
   const [dadosEvento, setDadosEvento] = useState([]);
   const [isPerguntaModalVisible, setPerguntaModalVisible] = useState(false);
   const [isCNPJModalVisible, setCNPJModalVisible] = useState(false);
-  const [isModalDialogVisible, setIsModalDialogVisible] = useState(false);
+  const [isDialogVisible, setisDialogVisible] = useState(false);
   const [dialogType, setDialogType] = useState('');
   const [dialogMessage, setDialogMessage] = useState('');
   const [questionMessage, setQuestionMessage] = useState('');
@@ -32,11 +32,7 @@ export default function DadosEvento({ navigation }) {
   function showMessage(Message, DialogType = '') {
     setDialogType(DialogType);
     setDialogMessage(Message);
-    setIsModalDialogVisible(true);
-  }
-
-  function handleModal() {
-    setIsModalDialogVisible(false);
+    setisDialogVisible(true);
   }
 
   function handleModalPergunta(aQuestionMessage) {
@@ -238,77 +234,18 @@ export default function DadosEvento({ navigation }) {
           </View>
         </Modal>
       </View>
-
-      <View style={styles.ContainerModais}>
-        <Modal
-          isVisible={isPerguntaModalVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image style={styles.ImageMessage} source={Imagens.THINK} />
-            <Text style={styles.TextMessage}>{questionMessage}</Text>
-
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                style={styles.buttonCancelar}
-                onPress={() => handleModalResposta(false)}
-              >
-                <Text style={styles.TextButton}>Não</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.buttonConfirmar}
-                onPress={() => handleModalResposta(true)}
-              >
-                <Text style={styles.TextButton}>Sim</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </View>
-
-      <View style={styles.ContainerModal}>
-        <Modal
-          isVisible={isModalDialogVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image
-              style={styles.ImageMessage}
-              source={dialogType ? Imagens.SAD : Imagens.HAPPY}
-            />
-            <Text style={styles.TextMessage}>{dialogMessage}</Text>
-
-            <TouchableOpacity
-              style={{
-                margin: 10,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 8,
-                backgroundColor: dialogType
-                  ? Colors.COLORS.BUTTON_ERROR
-                  : Colors.COLORS.BUTTON_SUCESS,
-              }}
-              onPress={() => handleModal()}
-            >
-              <Text style={styles.TextButton}>Fechar</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
+      <Pergunta
+        visible={isPerguntaModalVisible}
+        message={questionMessage}
+        close={() => handleModalResposta(false)}
+        confirm={() => handleModalResposta(true)}
+      />
+      <Mensagens
+        type={dialogType}
+        visible={isDialogVisible}
+        message={dialogMessage}
+        close={() => setisDialogVisible(false)}
+      />
       <Loading loading={isLoadingVisible} message={mensagemLoading} />
     </Background>
   );

@@ -4,15 +4,13 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   AsyncStorage,
 } from 'react-native';
-import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Funcoes from '~/utils/Funcoes';
 import Background from '~/components/Background';
 import Colors from '~/constants/Colors';
-import Imagens from '~/constants/Images';
+import Pergunta from '~/components/Pergunta';
 
 export default function ConfirmaEventoSetor({ navigation }) {
   const evento = navigation.getParam('evento');
@@ -99,40 +97,12 @@ export default function ConfirmaEventoSetor({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.ContainerModal}>
-        <Modal
-          isVisible={isPerguntaModalVisible}
-          backdropOpacity={0.9}
-          animationIn="zoomInDown"
-          animationOut="zoomOutUp"
-          animationInTiming={600}
-          animationOutTiming={600}
-          backdropTransitionInTiming={600}
-          backdropTransitionOutTiming={600}
-        >
-          <View style={styles.ContainerModal}>
-            <Image style={styles.ImageMessage} source={Imagens.THINK} />
-            <Text style={styles.TextMessage}>{questionMessage}</Text>
-
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                style={styles.buttonCancelar}
-                onPress={() => handleModalResposta(false)}
-              >
-                <Text style={styles.TextButton}>Não</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.buttonConfirmar}
-                onPress={() => handleModalResposta(true)}
-              >
-                <Text style={styles.TextButton}>Sim</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </View>
+      <Pergunta
+        visible={isPerguntaModalVisible}
+        message={questionMessage}
+        close={() => handleModalResposta(false)}
+        confirm={() => handleModalResposta(true)}
+      />
     </Background>
   );
 }

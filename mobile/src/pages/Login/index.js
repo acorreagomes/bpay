@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { StyleSheet, Text, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import Background from '~/components/Background';
 import { Container, Form, FormInput } from './styles';
 import Colors from '~/constants/Colors';
 import Imagens from '~/constants/Images';
 import Loading from '~/components/Loading';
+import Mensagens from '~/components/Mensagens';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
@@ -15,10 +16,19 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [dialogType, setDialogType] = useState('');
+  const [dialogMessage, setDialogMessage] = useState('');
+
+  function showMessage(Message, DialogType = '') {
+    setDialogType(DialogType);
+    setDialogMessage(Message);
+    setIsDialogVisible(true);
+  }
 
   function handleSubmit() {
     if (!email || !senha) {
-      alert('Informe seu Email e Senha');
+      showMessage('Informe seu Email e Senha', 'error');
     } else {
       setLoading(true);
       dispatch(signInRequest(email, senha));
@@ -58,6 +68,12 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
         </Form>
       </Container>
+      <Mensagens
+        type={dialogType}
+        visible={isDialogVisible}
+        message={dialogMessage}
+        close={() => setIsDialogVisible(false)}
+      />
       <Loading loading={loading} message="Validando credenciais..." />
     </Background>
   );
