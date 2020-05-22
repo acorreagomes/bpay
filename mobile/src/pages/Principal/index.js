@@ -268,11 +268,6 @@ export default function Principal({ navigation }) {
 
 Principal.navigationOptions = ({ navigation }) => ({
   title: '',
-  headerLeft: () => (
-    <TouchableOpacity onPress={() => { }}>
-      <Icon name="menu" size={30} color={Colors.COLORS.WHITE} />
-    </TouchableOpacity>
-  ),
 });
 
 const styles = StyleSheet.create({
