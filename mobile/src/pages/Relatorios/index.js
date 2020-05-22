@@ -122,11 +122,6 @@ Relatorios.navigationOptions = ({ navigation }) => ({
       <Icon name="arrow-back" size={30} color={Colors.COLORS.WHITE} />
     </TouchableOpacity>
   ),
-  headerRight: () => (
-    <TouchableOpacity onPress={() => { }}>
-      <Icon name="search" size={30} color={Colors.COLORS.WHITE} />
-    </TouchableOpacity>
-  ),
 });
 
 const styles = StyleSheet.create({

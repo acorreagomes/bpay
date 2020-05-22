@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import NfcManager, { NfcEvents } from 'react-native-nfc-manager';
@@ -96,7 +96,7 @@ export default function Principal({ navigation }) {
         });
       }
     } catch (error) {
-      alert(error);
+      showMessage(error, 'error');
     }
     handleNFCVisible(false, '');
   }
@@ -106,26 +106,29 @@ export default function Principal({ navigation }) {
     SituacaoCartao(tag.id);
   }
 
-  async function getEventoSelecionado() {
-    try {
-      const dados = await AsyncStorage.multiGet([
-        'id_evento',
-        'id_setor',
-        'valor_min_parcelamento',
-        'percentual_juros_parcelamento',
-        'qtde_max_parcelas',
-      ]);
-      setDadosEvento({
-        id_evento: dados[0][1],
-        id_setor: dados[1][1],
-        valor_min_parcelamento: dados[2][1],
-        percentual_juros_parcelamento: dados[3][1],
-        qtde_max_parcelas: dados[4][1],
-      });
-    } catch (error) {
-      // /
+  useEffect(() => {
+    async function getEventoSelecionado() {
+      try {
+        const dados = await AsyncStorage.multiGet([
+          'id_evento',
+          'id_setor',
+          'valor_min_parcelamento',
+          'percentual_juros_parcelamento',
+          'qtde_max_parcelas',
+        ]);
+        setDadosEvento({
+          id_evento: dados[0][1],
+          id_setor: dados[1][1],
+          valor_min_parcelamento: dados[2][1],
+          percentual_juros_parcelamento: dados[3][1],
+          qtde_max_parcelas: dados[4][1],
+        });
+      } catch (error) {
+        showMessage(error, 'error');
+      }
     }
-  }
+    getEventoSelecionado();
+  }, []);
 
   useEffect(() => {
     NfcManager.start();
@@ -133,8 +136,7 @@ export default function Principal({ navigation }) {
       handleNumeroChip(tag);
       NfcManager.unregisterTagEvent().catch(() => 0);
     });
-    getEventoSelecionado();
-  });
+  }, [handleNumeroChip]);
 
   return (
     <Background>
