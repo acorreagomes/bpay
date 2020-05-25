@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 class Usuario extends Model {
   static init(sequelize) {
     super.init({
+      id_perfil_usuario: Sequelize.INTEGER,
       nome: Sequelize.STRING,
       email: Sequelize.STRING,
       senha: Sequelize.STRING,
@@ -18,7 +19,9 @@ class Usuario extends Model {
     });
     return this;
   }
-
+  static associate(models) {
+    this.belongsTo(models.PerfilUsuario, { foreignKey: 'id_perfil_usuario', as: 'perfil_usuarios' });
+  }
   checkPassword(senha_hash) {
     return bcrypt.compare(senha_hash, this.senha);
   }

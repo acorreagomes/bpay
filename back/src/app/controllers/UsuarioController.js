@@ -1,11 +1,13 @@
 import * as Yup from 'yup';
 import Usuario from '../models/Usuarios';
+import PerfilUsuario from '../models/PerfilUsuario';
 
 class UsuarioController {
 
   async store(req, res) {
 
     const schema = Yup.object().shape({
+      id_perfil_usuario: Yup.number().required(),
       nome: Yup.string().required(),
       email: Yup.string().email().required(),
       senha: Yup.string().required().min(6)
@@ -20,9 +22,15 @@ class UsuarioController {
       return res.status(200).json({ error: 'Este email já está sendo usado!' });
     }
 
-    const { id, nome, email, admin } = await Usuario.create(req.body);
+    const perfilUsuario = await PerfilUsuario.findByPk(req.body.id_perfil_usuario);
+    if (!perfilUsuario) {
+      return res.status(200).json({ error: 'Perfil de Usuário não encontrado!' });
+    }
+
+    const { id, id_perfil_usuario, nome, email, admin } = await Usuario.create(req.body);
     return res.json({
       id,
+      id_perfil_usuario,
       nome,
       email,
       admin

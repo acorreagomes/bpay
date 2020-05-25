@@ -4,7 +4,6 @@ import Produtor from '../models/Produtores';
 import Evento from '../models/Eventos';
 import Setor from '../models/Setores';
 import Transacao from '../models/Transacoes';
-import Funcoes from '../utils/Funcoes';
 import { format } from 'date-fns';
 
 class EventoController {

@@ -81,16 +81,15 @@ class TransacaoController {
       return res.status(200).json({ error: 'Evento não Liberado!' });
     }
 
-    // const dataAtual = Funcoes.getCurrentFullDate();
-    // const horaAtual = Funcoes.getCurrentFullHour();
+    const dataAtual = Funcoes.getCurrentFullDate();
 
-    // if (dataAtual < evento.data_inicio || horaAtual < evento.hora_inicio) {
-    //   return res.status(200).json({ error: 'Evento não iniciado!' });
-    // }
+    if (dataAtual < evento.data_inicio) {
+      return res.status(200).json({ error: 'Evento não iniciado!' });
+    }
 
-    // if (dataAtual > evento.data_termino || horaAtual > evento.hora_termino) {
-    //   return res.status(200).json({ error: 'Evento finalizado!' });
-    // }
+    if (dataAtual > evento.data_termino) {
+      return res.status(200).json({ error: 'Evento já finalizado!' });
+    }
 
     const produtor = await Produtor.findByPk(evento.id_produtor);
 
