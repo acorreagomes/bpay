@@ -38,6 +38,7 @@ class EventoController {
       where: {
         id_setor: setoresCodigo,
         tipo_transacao: 'C',
+        cancelada: false,
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -49,7 +50,8 @@ class EventoController {
         id_setor: setoresCodigo,
         tipo_transacao: 'C',
         forma_pagamento: 'C',
-        tipo_operacao_cartao: 'C'
+        tipo_operacao_cartao: 'C',
+        cancelada: false,
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -61,7 +63,8 @@ class EventoController {
         id_setor: setoresCodigo,
         tipo_transacao: 'C',
         forma_pagamento: 'C',
-        tipo_operacao_cartao: 'D'
+        tipo_operacao_cartao: 'D',
+        cancelada: false,
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -72,7 +75,8 @@ class EventoController {
       where: {
         id_setor: setoresCodigo,
         tipo_transacao: 'C',
-        forma_pagamento: 'D'
+        forma_pagamento: 'D',
+        cancelada: false,
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -83,6 +87,7 @@ class EventoController {
       where: {
         id_setor: setoresCodigo,
         tipo_transacao: 'D',
+        cancelada: false,
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -93,6 +98,7 @@ class EventoController {
       where: {
         id_setor: setoresCodigo,
         tipo_transacao: 'D',
+        cancelada: false,
       },
       attributes: ['id_setor', 'setor.nome_setor',
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total'],
@@ -107,11 +113,35 @@ class EventoController {
       group: ['id_setor', 'nome_setor']
     });
 
+    const totalRecargasCanceladas = await Transacao.findAll({
+      where: {
+        id_setor: setoresCodigo,
+        tipo_transacao: 'C',
+        cancelada: true,
+      },
+      attributes: [
+        [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
+      raw: true,
+    });
+
+    const totalVendasCanceladas = await Transacao.findAll({
+      where: {
+        id_setor: setoresCodigo,
+        tipo_transacao: 'D',
+        cancelada: true,
+      },
+      attributes: [
+        [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
+      raw: true,
+    });
+
     return res.json({
       'TotalRecargas': Number(totalRecargas[0].Total, 2),
       'TotalRecargasCredito': Number(totalRecargasCredito[0].Total, 2),
       'TotalRecargasDebito': Number(totalRecargasDebito[0].Total, 2),
       'TotalRecargasDinheiro': Number(totalRecargasDinheiro[0].Total, 2),
+      'TotalRecargasCanceladas': Number(totalRecargasCanceladas[0].Total, 2),
+      'TotalVendasCanceladas': Number(totalVendasCanceladas[0].Total, 2),
       'TotalVendas': Number(totalVendas[0].Total, 2),
       'SaldoRestante': Number((totalRecargas[0].Total - totalVendas[0].Total).toFixed(2), 2),
       'TotalVendaSetores': totalVendaSetores,

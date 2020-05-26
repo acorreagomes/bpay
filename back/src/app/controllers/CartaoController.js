@@ -159,7 +159,7 @@ class CartaoController {
     };
     const extratoCartao = await Transacao.findAll({
       where: {
-        id_cartao: cartao.id
+        id_cartao: cartao.id,
       },
       order: ['data_hora_transacao'],
       attributes: [
@@ -168,7 +168,8 @@ class CartaoController {
         'tipo_transacao',
         'forma_pagamento',
         'tipo_operacao_cartao',
-        'data_hora_transacao'],
+        'data_hora_transacao',
+        'cancelada'],
       include: [
         {
           model: Usuario, as: 'usuario',
@@ -181,6 +182,7 @@ class CartaoController {
       ],
 
     })
+
     return res.json({
       cartao,
       'extrato': extratoCartao

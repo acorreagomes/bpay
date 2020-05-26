@@ -23,6 +23,7 @@ routes.get('/clientes/:documento', ClienteController.index);
 routes.post('/clientes', ClienteController.store);
 
 routes.post('/transacoes', TransacaoController.store);
+routes.delete('/transacoes/:id_transacao/cancelar', TransacaoController.cancelamento);
 
 routes.get('/cartoes/situacao', CartaoController.situacao);
 routes.post('/cartoes', CartaoController.store);

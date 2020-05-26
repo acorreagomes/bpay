@@ -51,6 +51,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      cancelada: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      id_usuario_cancelou: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      data_cancelamento: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+      hora_cancelamento: {
+        type: Sequelize.TIME,
+        allowNull: true,
+      },
       data_hora_transacao: {
         type: 'TIMESTAMP',
         allowNull: false,
@@ -79,6 +96,16 @@ module.exports = {
       .then(() => queryInterface.addConstraint('transacoes', ['id_usuario'], {
         type: 'FOREIGN KEY',
         name: 'FK_TransacoesIdUsuario_Usuarios',
+        references: {
+          table: 'usuarios',
+          field: 'id',
+        },
+        onDelete: 'no action',
+        onUpdate: 'no action',
+      }))
+      .then(() => queryInterface.addConstraint('transacoes', ['id_usuario_cancelou'], {
+        type: 'FOREIGN KEY',
+        name: 'FK_TransacoesIdUsuarioCancelou_Usuarios',
         references: {
           table: 'usuarios',
           field: 'id',

@@ -5,6 +5,7 @@ import Evento from '../models/Eventos';
 import Produtor from '../models/Produtores';
 import Setor from '../models/Setores';
 import Terminal from '../models/Terminais';
+import Usuario from '../models/Usuarios'
 import Funcoes from '../utils/Funcoes';
 
 class TransacaoController {
@@ -117,6 +118,48 @@ class TransacaoController {
     req.body.id_cartao = cartao.id;
     const datas = await Transacao.create(req.body);
     return res.json(datas);
+  }
+
+  async cancelamento(req, res) {
+
+    const usuario = await Usuario.findByPk(req.userId);
+
+    if (usuario.id_perfil_usuario !== 0) {
+      return res.status(200).json({ error: 'Usuário sem privilégios!' });
+    }
+    const transacao = await Transacao.findByPk(req.params.id_transacao);
+    if (!transacao) {
+      return res.status(200).json({ error: 'Transação não encontrada!' });
+    }
+    if (transacao.cancelada) {
+      return res.status(200).json({ error: 'Transação já cancelada!' });
+    }
+    const setor = await Setor.findByPk(transacao.id_setor);
+
+    const evento = await Evento.findByPk(setor.id_evento);
+
+    if (!evento.liberado) {
+      return res.status(200).json({ error: 'Evento não Liberado!' });
+    }
+
+    const dataAtual = Funcoes.getCurrentFullDate();
+
+    if (dataAtual < evento.data_inicio) {
+      return res.status(200).json({ error: 'Evento não iniciado!' });
+    }
+
+    if (dataAtual > evento.data_termino) {
+      return res.status(200).json({ error: 'Evento já finalizado!' });
+    }
+
+    transacao.cancelada = true;
+    transacao.id_usuario_cancelou = req.userId;
+    transacao.data_cancelamento = dataAtual;
+    transacao.hora_cancelamento = Funcoes.getCurrentFullHour();
+    transacao.save();
+
+    res.json(transacao);
+
   }
 }
 
