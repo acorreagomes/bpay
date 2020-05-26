@@ -24,11 +24,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      admin: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-      },
       criado_em: {
         type: 'TIMESTAMP',
         allowNull: false,

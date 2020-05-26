@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import * as Yup from 'yup';
 import Usuario from '../models/Usuarios';
-import PerfilUsuario from '../models/PerfilUsuario';
+import PerfilUsuarios from '../models/PerfilUsuarios';
 import authConfig from '../../config/auth';
 
 class SessionController {
@@ -30,14 +30,14 @@ class SessionController {
     }
 
     const { id, nome } = usuario;
-    //const perfil = await PerfilUsuario.findOne({ where: { id: usuario.id_perfil_usuario } });
-
+    const perfil = await PerfilUsuarios.findOne({ where: { id: usuario.id_perfil_usuario } });
 
     return res.json({
       usuario: {
         id,
         nome,
         email,
+        perfil,
       },
       token: jwt.sign({ id }, authConfig.secret, { expiresIn: authConfig.expiresIn })
     });

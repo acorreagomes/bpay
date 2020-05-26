@@ -43,6 +43,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true
       },
+      multiplos_cartoes_cliente: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       liberado: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

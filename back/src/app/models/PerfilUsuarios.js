@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class PerfilUsuario extends Model {
+class PerfilUsuarios extends Model {
   static init(sequelize) {
     super.init({
       nome_perfil: Sequelize.STRING,
@@ -18,4 +18,4 @@ class PerfilUsuario extends Model {
   }
 };
 
-export default PerfilUsuario;
+export default PerfilUsuarios;

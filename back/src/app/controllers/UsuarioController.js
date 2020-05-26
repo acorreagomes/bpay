@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import Usuario from '../models/Usuarios';
-import PerfilUsuario from '../models/PerfilUsuario';
+import PerfilUsuarios from '../models/PerfilUsuarios';
 
 class UsuarioController {
 
@@ -22,18 +22,17 @@ class UsuarioController {
       return res.status(200).json({ error: 'Este email já está sendo usado!' });
     }
 
-    const perfilUsuario = await PerfilUsuario.findByPk(req.body.id_perfil_usuario);
-    if (!perfilUsuario) {
+    const perfilUsuarios = await PerfilUsuarios.findByPk(req.body.id_perfil_usuario);
+    if (!perfilUsuarios) {
       return res.status(200).json({ error: 'Perfil de Usuário não encontrado!' });
     }
 
-    const { id, id_perfil_usuario, nome, email, admin } = await Usuario.create(req.body);
+    const { id, id_perfil_usuario, nome, email } = await Usuario.create(req.body);
     return res.json({
       id,
       id_perfil_usuario,
       nome,
       email,
-      admin
     });
   }
 

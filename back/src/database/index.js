@@ -7,7 +7,7 @@ import Evento from '../app/models/Eventos';
 import Terminal from '../app/models/Terminais';
 import Produtor from '../app/models/Produtores';
 import Setor from '../app/models/Setores';
-import PerfilUsuario from '../app/models/PerfilUsuario';
+import PerfilUsuarios from '../app/models/PerfilUsuarios';
 
 import databaseConfig from '../config/database';
 
@@ -20,7 +20,7 @@ const models = [
   Terminal,
   Produtor,
   Setor,
-  PerfilUsuario];
+  PerfilUsuarios];
 
 class Database {
   constructor() {

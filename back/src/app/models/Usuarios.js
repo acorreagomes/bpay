@@ -8,7 +8,6 @@ class Usuario extends Model {
       nome: Sequelize.STRING,
       email: Sequelize.STRING,
       senha: Sequelize.STRING,
-      admin: Sequelize.BOOLEAN,
     }, {
       sequelize,
     });
@@ -20,7 +19,7 @@ class Usuario extends Model {
     return this;
   }
   static associate(models) {
-    this.belongsTo(models.PerfilUsuario, { foreignKey: 'id_perfil_usuario', as: 'perfil_usuarios' });
+    this.belongsTo(models.PerfilUsuarios, { foreignKey: 'id_perfil_usuario', as: 'perfil_usuarios' });
   }
   checkPassword(senha_hash) {
     return bcrypt.compare(senha_hash, this.senha);

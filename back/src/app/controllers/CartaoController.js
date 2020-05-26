@@ -82,25 +82,25 @@ class CartaoController {
     const cartaoOrigem = await Cartao.findOne({ where: { numero: req.body.numero_cartao_origem } });
 
     if (!cartaoOrigem) {
-      return res.status(400).json({ error: 'Cartão de Origem não Encontrado' });
+      return res.status(200).json({ error: 'Cartão de Origem não Encontrado' });
     };
 
     if (cartaoOrigem.bloqueado) {
-      return res.status(400).json({ error: 'Cartão de Origem está Bloqueado' });
+      return res.status(200).json({ error: 'Cartão de Origem está Bloqueado' });
     };
 
     if (req.body.valor_transferencia > cartaoOrigem.saldo) {
-      return res.status(400).json({ error: 'Saldo de transferencia Insuficiente' });
+      return res.status(200).json({ error: 'Saldo de transferencia Insuficiente' });
     };
 
     const cartaoDestino = await Cartao.findOne({ where: { numero: req.body.numero_cartao_destino } });
 
     if (!cartaoDestino) {
-      return res.status(400).json({ error: 'Cartão de Destino não Encontrado' });
+      return res.status(200).json({ error: 'Cartão de Destino não Encontrado' });
     };
 
     if (cartaoDestino.bloqueado) {
-      return res.status(400).json({ error: 'Cartão de Destino está Bloqueado' });
+      return res.status(200).json({ error: 'Cartão de Destino está Bloqueado' });
     };
 
     cartaoOrigem.saldo = Number(cartaoOrigem.saldo) - Number(req.body.valor_transferencia);
@@ -126,7 +126,7 @@ class CartaoController {
     const cartao = await Cartao.findOne({ where: { numero: req.body.numero } });
 
     if (!cartao) {
-      return res.status(400).json({ error: 'Cartão não Encontrado' });
+      return res.status(200).json({ error: 'Cartão não Encontrado' });
     };
 
     cartao.bloqueado = req.body.bloquear;
@@ -161,7 +161,7 @@ class CartaoController {
       where: {
         id_cartao: cartao.id
       },
-      order: ['tipo_transacao'],
+      order: ['data_hora_transacao'],
       attributes: [
         'id',
         'valor_transacao',
@@ -181,12 +181,10 @@ class CartaoController {
       ],
 
     })
-    const returnData = {
+    return res.json({
       cartao,
       'extrato': extratoCartao
-    }
-
-    return res.json(returnData);
+    });
   };
 
 }
