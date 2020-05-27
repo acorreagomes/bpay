@@ -36,7 +36,7 @@ module.exports = {
       type: 'FOREIGN KEY',
       name: 'FK_UsuariosIdPerfil_Usuario',
       references: {
-        table: 'perfil_usuario',
+        table: 'perfil_usuarios',
         field: 'id',
       },
       onDelete: 'no action',
