@@ -7,7 +7,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      numero_serie: {
+      endereco_mac: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true

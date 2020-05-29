@@ -37,7 +37,7 @@ class EventoController {
     const totalRecargas = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'C',
+        tipo_transacao: 'CREDITO',
         cancelada: false,
       },
       attributes: [
@@ -48,9 +48,9 @@ class EventoController {
     const totalRecargasCredito = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'C',
-        forma_pagamento: 'C',
-        tipo_operacao_cartao: 'C',
+        tipo_transacao: 'CREDITO',
+        forma_pagamento: 'CARTAO',
+        tipo_operacao_cartao: 'CREDITO',
         cancelada: false,
       },
       attributes: [
@@ -61,9 +61,9 @@ class EventoController {
     const totalRecargasDebito = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'C',
-        forma_pagamento: 'C',
-        tipo_operacao_cartao: 'D',
+        tipo_transacao: 'CREDITO',
+        forma_pagamento: 'CARTAO',
+        tipo_operacao_cartao: 'DEBITO',
         cancelada: false,
       },
       attributes: [
@@ -74,8 +74,8 @@ class EventoController {
     const totalRecargasDinheiro = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'C',
-        forma_pagamento: 'D',
+        tipo_transacao: 'CREDITO',
+        forma_pagamento: 'DINHEIRO',
         cancelada: false,
       },
       attributes: [
@@ -86,7 +86,7 @@ class EventoController {
     const totalVendas = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'D',
+        tipo_transacao: 'DINHEIRO',
         cancelada: false,
       },
       attributes: [
@@ -97,7 +97,7 @@ class EventoController {
     const totalVendaSetores = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'D',
+        tipo_transacao: 'DINHEIRO',
         cancelada: false,
       },
       attributes: ['id_setor', 'setor.nome_setor',
@@ -116,7 +116,7 @@ class EventoController {
     const totalRecargasCanceladas = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'C',
+        tipo_transacao: 'CREDITO',
         cancelada: true,
       },
       attributes: [
@@ -127,7 +127,7 @@ class EventoController {
     const totalVendasCanceladas = await Transacao.findAll({
       where: {
         id_setor: setoresCodigo,
-        tipo_transacao: 'D',
+        tipo_transacao: 'DEBITO',
         cancelada: true,
       },
       attributes: [

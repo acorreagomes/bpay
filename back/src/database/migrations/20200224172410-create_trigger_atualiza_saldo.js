@@ -4,20 +4,20 @@ module.exports = {
       " CREATE FUNCTION atualiza_saldo_cartao() RETURNS trigger AS $$ " +
       " BEGIN " +
       " IF (TG_OP = 'INSERT') THEN " +
-      "    IF NEW.tipo_transacao = 'C' THEN " +
+      "    IF NEW.tipo_transacao = 'CREDITO' THEN " +
       "    update cartoes set saldo = saldo + NEW.valor_transacao where id = NEW.id_cartao; " +
       "     END IF; " +
       "     " +
-      "   IF NEW.tipo_transacao = 'D' THEN " +
+      "   IF NEW.tipo_transacao = 'DEBITO' THEN " +
       "    update cartoes set saldo = saldo - NEW.valor_transacao where id = NEW.id_cartao; " +
       "     END IF; " +
       "     RETURN NEW; " +
       " ELSIF (TG_OP = 'UPDATE') THEN " +
-      "    IF OLD.tipo_transacao = 'C' THEN " +
+      "    IF OLD.tipo_transacao = 'CREDITO' THEN " +
       "    update cartoes set saldo = saldo - OLD.valor_transacao where id = OLD.id_cartao; " +
       "     END IF; " +
       "     " +
-      "   IF NEW.tipo_transacao = 'D' THEN " +
+      "   IF NEW.tipo_transacao = 'DEBITO' THEN " +
       "    update cartoes set saldo = saldo + OLD.valor_transacao where id = OLD.id_cartao; " +
       "     END IF; " +
       "     RETURN OLD; " +

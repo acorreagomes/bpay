@@ -13,12 +13,10 @@ class TransacaoController {
   async store(req, res) {
 
     const schema = Yup.object().shape({
-      id_evento: Yup.number().required(),
       id_setor: Yup.number().required(),
       id_chip: Yup.string().required(),
       id_terminal: Yup.number().required(),
       numero_cartao: Yup.string().required(),
-      endereco_mac: Yup.string().required(),
       valor_transacao: Yup.number().min(1).required(),
       forma_pagamento: Yup.string().required(),
       tipo_operacao_cartao: Yup.string().required(),
@@ -32,7 +30,8 @@ class TransacaoController {
       req.body.tipo_operacao_credito = req.body.tipo_operacao_credito.toUpperCase();
     }
 
-    const validTypes = ["C", "D"];
+    const validTypes = ["CREDITO", "DEBITO", "CARTAO",
+      "DINHEIRO", "SALDO_INICIAL", "SANGRIA", "SUPRIMENTO"];
     if ((validTypes.indexOf(req.body.forma_pagamento) == -1) ||
       (validTypes.indexOf(req.body.tipo_operacao_cartao) == -1) ||
       (validTypes.indexOf(req.body.tipo_transacao) == -1)) {
@@ -40,7 +39,7 @@ class TransacaoController {
     }
 
     if (req.body.tipo_operacao_credito) {
-      const validTypesCredito = ["V", "P"];
+      const validTypesCredito = ["VISTA", "PRAZO"];
       if (validTypesCredito.indexOf(req.body.tipo_operacao_credito) == -1) {
         return res.status(400).json({ error: 'Falha de Validação!' });
       }
@@ -66,7 +65,7 @@ class TransacaoController {
 
     const { tipo_transacao, valor_transacao } = req.body;
 
-    if (tipo_transacao == 'D') {
+    if (tipo_transacao == 'DEBITO') {
       if (valor_transacao > cartao.saldo) {
         return res.status(200).json({ error: 'Saldo Insuficiente!' });
       }

@@ -23,28 +23,24 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      endereco_mac: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
       valor_transacao: {
         type: Sequelize.DECIMAL,
         allowNull: false
       },
       forma_pagamento: {
-        type: Sequelize.CHAR(1),
+        type: Sequelize.STRING,
         allowNull: false
       },
       tipo_operacao_cartao: {
-        type: Sequelize.CHAR(1),
+        type: Sequelize.STRING,
         allowNull: false
       },
       tipo_operacao_credito: {
-        type: Sequelize.CHAR(1),
+        type: Sequelize.STRING,
         allowNull: true
       },
       tipo_transacao: {
-        type: Sequelize.CHAR(1),
+        type: Sequelize.STRING,
         allowNull: false
       },
       descricao_pagamento: {

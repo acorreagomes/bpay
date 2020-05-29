@@ -5,6 +5,7 @@ class Usuario extends Model {
   static init(sequelize) {
     super.init({
       id_perfil_usuario: Sequelize.INTEGER,
+      id_produtor: Sequelize.INTEGER,
       nome: Sequelize.STRING,
       email: Sequelize.STRING,
       senha: Sequelize.STRING,

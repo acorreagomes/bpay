@@ -11,6 +11,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      id_produtor: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
       nome: {
         type: Sequelize.STRING,
         allowNull: false
@@ -23,6 +27,11 @@ module.exports = {
       senha: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      bloqueado: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
       },
       criado_em: {
         type: 'TIMESTAMP',
@@ -37,6 +46,16 @@ module.exports = {
       name: 'FK_UsuariosIdPerfil_Usuario',
       references: {
         table: 'perfil_usuarios',
+        field: 'id',
+      },
+      onDelete: 'no action',
+      onUpdate: 'no action',
+    }))
+    .then(() => queryInterface.addConstraint('usuarios', ['id_produtor'], {
+      type: 'FOREIGN KEY',
+      name: 'FK_UsuariosIdProdutor',
+      references: {
+        table: 'produtores',
         field: 'id',
       },
       onDelete: 'no action',

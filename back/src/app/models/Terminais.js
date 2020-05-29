@@ -3,7 +3,7 @@ import Sequelize, { Model } from 'sequelize';
 class Terminais extends Model {
   static init(sequelize) {
     super.init({
-      numero_serie: Sequelize.STRING,
+      endereco_mac: Sequelize.STRING,
       modelo: Sequelize.STRING,
       fabricante: Sequelize.STRING,
     }, {

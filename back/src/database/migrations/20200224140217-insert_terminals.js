@@ -3,7 +3,7 @@ module.exports = {
   up: function (queryInterface) {
     return queryInterface.bulkInsert('terminais', [
       {
-        numero_serie: '11a2s5s5aa5s6997',
+        endereco_mac: '11a2s5s5aa5s6997',
         modelo: 'Moderninha Mini',
         fabricante: 'Pag-Seguro',
       },
