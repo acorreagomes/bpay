@@ -30,6 +30,7 @@ class EventoController {
   };
 
   async eventoRelatorio(req, res) {
+
     const setor = await Setor.findAll({ where: { id_evento: req.params.id } });
     const setoresCodigo = [];
     setor.map(setores => setoresCodigo.push(setores.id));
@@ -39,6 +40,8 @@ class EventoController {
         id_setor: setoresCodigo,
         tipo_transacao: 'CREDITO',
         cancelada: false,
+        //Continuar daqui a noite depois de um lanche mara.
+        id_usuario: req.userId > 1 ? req.userId : -1
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -135,6 +138,63 @@ class EventoController {
       raw: true,
     });
 
+    const totalSangrias = await Transacao.findAll({
+      where: {
+        id_setor: setoresCodigo,
+        tipo_transacao: 'SANGRIA',
+        cancelada: false,
+      },
+      attributes: ['id_setor', 'setor.nome_setor',
+        [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total'],
+      ],
+      include: [
+        {
+          model: Setor, as: 'setor',
+          attributes: [],
+        }
+      ],
+      raw: true,
+      group: ['id_setor', 'nome_setor']
+    });
+
+    const totalSuprimentos = await Transacao.findAll({
+      where: {
+        id_setor: setoresCodigo,
+        tipo_transacao: 'SUPRIMENTO',
+        cancelada: false,
+      },
+      attributes: ['id_setor', 'setor.nome_setor',
+        [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total'],
+      ],
+      include: [
+        {
+          model: Setor, as: 'setor',
+          attributes: [],
+        }
+      ],
+      raw: true,
+      group: ['id_setor', 'nome_setor']
+    });
+
+    const totalSaldoInicial = await Transacao.findAll({
+      where: {
+        id_setor: setoresCodigo,
+        tipo_transacao: 'SALDO_INICIAL',
+        cancelada: false,
+      },
+      attributes: ['id_setor', 'setor.nome_setor',
+        [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total'],
+      ],
+      include: [
+        {
+          model: Setor, as: 'setor',
+          attributes: [],
+        }
+      ],
+      raw: true,
+      group: ['id_setor', 'nome_setor']
+    });
+
     return res.json({
       'TotalRecargas': Number(totalRecargas[0].Total, 2),
       'TotalRecargasCredito': Number(totalRecargasCredito[0].Total, 2),
@@ -145,6 +205,9 @@ class EventoController {
       'TotalVendas': Number(totalVendas[0].Total, 2),
       'SaldoRestante': Number((totalRecargas[0].Total - totalVendas[0].Total).toFixed(2), 2),
       'TotalVendaSetores': totalVendaSetores,
+      'TotalSangrias': totalSangrias,
+      'TotalSuprimentos': totalSuprimentos,
+      'TotalSaldoInicial': totalSaldoInicial,
     });
   };
 

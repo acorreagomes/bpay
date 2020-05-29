@@ -21,7 +21,7 @@ module.exports = {
       },
       id_cartao: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       valor_transacao: {
         type: Sequelize.DECIMAL,
@@ -29,11 +29,11 @@ module.exports = {
       },
       forma_pagamento: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       tipo_operacao_cartao: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       tipo_operacao_credito: {
         type: Sequelize.STRING,
@@ -44,6 +44,10 @@ module.exports = {
         allowNull: false
       },
       descricao_pagamento: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      descricao_sangria_suprimentos: {
         type: Sequelize.STRING,
         allowNull: true
       },

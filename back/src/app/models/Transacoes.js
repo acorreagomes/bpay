@@ -13,6 +13,7 @@ class Transacoes extends Model {
       tipo_operacao_credito: Sequelize.STRING,
       tipo_transacao: Sequelize.STRING,
       descricao_pagamento: Sequelize.STRING,
+      descricao_sangria_suprimentos: Sequelize.STRING,
       cancelada: Sequelize.BOOLEAN,
       id_usuario_cancelou: Sequelize.INTEGER,
       data_cancelamento: Sequelize.DATE,

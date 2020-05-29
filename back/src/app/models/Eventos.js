@@ -12,6 +12,7 @@ class Evento extends Model {
       valor_min_parcelamento: Sequelize.DECIMAL,
       percentual_juros_parcelamento: Sequelize.DECIMAL,
       qtde_max_parcelas: Sequelize.INTEGER,
+      multiplos_cartoes_cliente: Sequelize.BOOLEAN,
       liberado: Sequelize.BOOLEAN,
     }, {
       sequelize,

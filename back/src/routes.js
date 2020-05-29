@@ -7,6 +7,7 @@ import ProdutorController from './app/controllers/ProdutorController';
 import SessionController from './app/controllers/SessionController';
 import EventoController from './app/controllers/EventoController';
 import SetorController from './app/controllers/SetorController';
+import TerminalController from './app/controllers/TerminaisController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -23,6 +24,7 @@ routes.get('/clientes/:documento', ClienteController.index);
 routes.post('/clientes', ClienteController.store);
 
 routes.post('/transacoes', TransacaoController.store);
+routes.post('/transacoes/Outros', TransacaoController.storeAnothers);
 routes.delete('/transacoes/:id_transacao/cancelar', TransacaoController.cancelamento);
 
 routes.get('/cartoes/situacao', CartaoController.situacao);
@@ -38,5 +40,7 @@ routes.post('/eventos', EventoController.store);
 
 routes.get('/setores/eventos/:id_evento', SetorController.setoresEvento);
 routes.post('/setores', SetorController.store);
+
+routes.post('/terminais', TerminalController.store);
 
 export default routes;

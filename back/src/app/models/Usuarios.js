@@ -9,6 +9,7 @@ class Usuario extends Model {
       nome: Sequelize.STRING,
       email: Sequelize.STRING,
       senha: Sequelize.STRING,
+      bloqueado: Sequelize.BOOLEAN,
     }, {
       sequelize,
     });
