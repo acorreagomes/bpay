@@ -4,6 +4,7 @@ import Produtor from '../models/Produtores';
 import Evento from '../models/Eventos';
 import Setor from '../models/Setores';
 import Transacao from '../models/Transacoes';
+import Usuarios from '../models/Usuarios';
 import { format } from 'date-fns';
 
 class EventoController {
@@ -31,6 +32,8 @@ class EventoController {
 
   async eventoRelatorio(req, res) {
 
+    const { id, id_perfil_usuario } = await Usuarios.findByPk(req.userId);
+
     const setor = await Setor.findAll({ where: { id_evento: req.params.id } });
     const setoresCodigo = [];
     setor.map(setores => setoresCodigo.push(setores.id));
@@ -40,8 +43,7 @@ class EventoController {
         id_setor: setoresCodigo,
         tipo_transacao: 'CREDITO',
         cancelada: false,
-        //Continuar daqui a noite depois de um lanche mara.
-        id_usuario: req.userId > 1 ? req.userId : -1
+        //id_usuario: id_perfil_usuario > 1 ? id : null
       },
       attributes: [
         [Sequelize.fn('sum', Sequelize.col('valor_transacao')), 'Total']],
@@ -229,24 +231,27 @@ class EventoController {
     const { data_inicio, data_termino, hora_inicio, hora_termino } = req.body;
 
     if (data_inicio > data_termino) {
-      return res.status(400).json({ error: 'Data Término deve ser posterior ou igual a de Início' });
+      return res.status(200).json({ error: 'Data Término deve ser posterior ou igual a de Início' });
     }
 
     if (hora_inicio >= hora_termino && data_termino == data_inicio) {
-      return res.status(400).json({ error: 'Hora Término deve ser posterior a de Início' });
+      return res.status(200).json({ error: 'Hora Término deve ser posterior a de Início' });
     }
 
     const produtor = await Produtor.findByPk(req.body.id_produtor);
     if (!produtor) {
-      return res.status(400).json({ error: 'Produtor não Encontrado' });
+      return res.status(200).json({ error: 'Produtor não Encontrado' });
     }
 
     const eventoExistente = await Evento.findOne({ where: { nome_evento: req.body.nome_evento } });
     if (eventoExistente) {
-      return res.status(400).json({ error: 'Duplicidade de Eventos' });
+      return res.status(200).json({ error: 'Duplicidade de Eventos' });
     }
 
-    const evento = await Evento.create(req.body);
+    const { id } = await Evento.create(req.body);
+
+    // .map em um array de setores aqui gravando-os.
+
     return res.json(evento);
   }
 
