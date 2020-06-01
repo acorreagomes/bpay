@@ -20,7 +20,7 @@ import TransacoesCreditoTipoPagamento from './pages/Transacoes/Credito/TipoPagam
 import TransacoesCreditoValorPagamento from './pages/Transacoes/Credito/ValorPagamento';
 import TipoPagamentoCredito from './pages/Transacoes/Credito/TipoPagamentoCredito';
 
-export default (logado = false) =>
+export default (logado = false, perfilUsuario = null) =>
   createAppContainer(
     createSwitchNavigator(
       {
@@ -34,9 +34,10 @@ export default (logado = false) =>
                 {
                   Principal,
                   ConsultaCartao,
-                  DadosEvento,
-                  Relatorios,
                   Configuracoes,
+                  // screenConsulta: perfilUsuario.acessa_consulta_cartao
+                  //   ? ConsultaCartao
+                  //   : null,
                 },
                 {
                   intialRouteName: 'Principal',

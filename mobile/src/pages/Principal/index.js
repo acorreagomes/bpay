@@ -17,6 +17,7 @@ import Mensagens from '~/components/Mensagens';
 
 export default function Principal({ navigation }) {
   const usuarioLogado = useSelector(state => state.auth.userNameLogged);
+  const perfilUsuario = useSelector(state => state.auth.profile);
   const dispatch = useDispatch();
   const [isNFCVisible, setNFCVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -151,7 +152,9 @@ export default function Principal({ navigation }) {
             flexWrap: 'wrap',
           }}
         >
-          <View>
+          <View
+            style={{ display: perfilUsuario.acessa_recargas ? 'flex' : 'none' }}
+          >
             <TouchableOpacity
               style={styles.ButtonCredito}
               onPress={() => handleNFCVisible(true, 'C')}
@@ -160,7 +163,9 @@ export default function Principal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Recarregar</Text>
           </View>
-          <View>
+          <View
+            style={{ display: perfilUsuario.acessa_vendas ? 'flex' : 'none' }}
+          >
             <TouchableOpacity
               style={styles.ButtonCredito}
               onPress={() => handleNFCVisible(true, 'D')}
@@ -169,7 +174,11 @@ export default function Principal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Debitar</Text>
           </View>
-          <View>
+          <View
+            style={{
+              display: perfilUsuario.acessa_consulta_cartao ? 'flex' : 'none',
+            }}
+          >
             <TouchableOpacity
               style={styles.ButtonCredito}
               onPress={() => handleNFCVisible(true, 'S')}
@@ -178,7 +187,11 @@ export default function Principal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Consultar</Text>
           </View>
-          <View>
+          <View
+            style={{
+              display: perfilUsuario.acessa_dados_evento ? 'flex' : 'none',
+            }}
+          >
             <TouchableOpacity
               style={styles.ButtonCredito}
               onPress={() => {
@@ -189,7 +202,11 @@ export default function Principal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Evento</Text>
           </View>
-          <View>
+          <View
+            style={{
+              display: perfilUsuario.acessa_relatorios ? 'flex' : 'none',
+            }}
+          >
             <TouchableOpacity
               style={styles.ButtonCredito}
               onPress={() => {
@@ -202,7 +219,11 @@ export default function Principal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Relatórios</Text>
           </View>
-          <View>
+          <View
+            style={{
+              display: perfilUsuario.acessa_configuracoes ? 'flex' : 'none',
+            }}
+          >
             <TouchableOpacity
               style={styles.ButtonCredito}
               onPress={() => navigation.navigate('Configuracoes')}

@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   userNameLogged: null,
   logado: false,
   loading: false,
+  profile: null,
 };
 
 export default function auth(state = INITIAL_STATE, action) {
@@ -19,6 +20,7 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.userNameLogged = action.payload.usuario.nome;
         draft.logado = true;
         draft.loading = false;
+        draft.profile = action.payload.usuario.perfil;
         break;
       }
       case '@auth/SIGN_FAILURE': {
@@ -29,6 +31,7 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.token = null;
         draft.userNameLogged = null;
         draft.logado = false;
+        draft.profile = null;
         break;
       }
       default:

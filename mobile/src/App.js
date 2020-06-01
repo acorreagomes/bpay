@@ -4,6 +4,7 @@ import createRouter from './routes';
 
 export default function App() {
   const logado = useSelector(state => state.auth.logado);
-  const Routes = createRouter(logado);
+  const perfilUsuario = useSelector(state => state.auth.profile);
+  const Routes = createRouter(logado, perfilUsuario);
   return <Routes />;
 }
