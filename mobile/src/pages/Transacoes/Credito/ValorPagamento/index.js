@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
-import DeviceInfo from 'react-native-device-info';
 import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
@@ -38,8 +37,9 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
       showMessage('Valor da Recarga Inválido', 'error');
     } else if (
       valorTransacao >= dadosEvento.valor_min_parcelamento &&
-      tipoPagamento === 'C' &&
-      tipoOperacaoCartao === 'C'
+      dadosEvento.valor_min_parcelamento > 0 &&
+      tipoPagamento === 'CREDITO' &&
+      tipoOperacaoCartao === 'CREDITO'
     ) {
       navigation.navigate('TipoPagamentoCredito', {
         data,
@@ -65,11 +65,10 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
           data.cartao.id_chip,
           dadosEvento.id_evento
         ),
-        endereco_mac: DeviceInfo.getUniqueId(),
         valor_transacao: valorTransacao,
         forma_pagamento: tipoPagamento,
         tipo_operacao_cartao: tipoOperacaoCartao,
-        tipo_transacao: 'C',
+        tipo_transacao: 'CREDITO',
       });
       if (response.data.error) {
         showMessage(response.data.error, 'error');
@@ -130,7 +129,7 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
         <View
           style={{
             marginHorizontal: 40,
-            display: tipoPagamento === 'D' ? 'flex' : 'none',
+            display: tipoPagamento === 'DINHEIRO' ? 'flex' : 'none',
           }}
         >
           <Text style={styles.TextQualValor}>Valor em Dinheiro</Text>
@@ -152,7 +151,7 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
         <View
           style={{
             marginHorizontal: 40,
-            display: tipoPagamento === 'D' ? 'flex' : 'none',
+            display: tipoPagamento === 'DINHEIRO' ? 'flex' : 'none',
           }}
         >
           <Text style={styles.TextQualValor}>Valor do Troco</Text>

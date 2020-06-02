@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
-import DeviceInfo from 'react-native-device-info';
 import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
@@ -50,11 +49,10 @@ export default function TransacoesDebito({ navigation }) {
           data.cartao.id_chip,
           dadosEvento.id_evento
         ),
-        endereco_mac: DeviceInfo.getUniqueId(),
         valor_transacao: valorTransacao,
-        forma_pagamento: 'D',
-        tipo_operacao_cartao: 'D',
-        tipo_transacao: 'D',
+        forma_pagamento: 'DINHEIRO',
+        tipo_operacao_cartao: 'DEBITO',
+        tipo_transacao: 'DEBITO',
       });
       if (response.data.error) {
         showMessage(response.data.error, 'error');

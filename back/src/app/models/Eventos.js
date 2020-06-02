@@ -5,8 +5,8 @@ class Evento extends Model {
     super.init({
       id_produtor: Sequelize.INTEGER,
       nome_evento: Sequelize.STRING,
-      data_inicio: Sequelize.DATE,
-      data_termino: Sequelize.DATE,
+      data_inicio: Sequelize.DATEONLY,
+      data_termino: Sequelize.DATEONLY,
       hora_inicio: Sequelize.TIME,
       hora_termino: Sequelize.TIME,
       valor_min_parcelamento: Sequelize.DECIMAL,

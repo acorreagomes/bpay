@@ -59,11 +59,11 @@ export default function TipoPagamentoCredito({ navigation }) {
           data.cartao.id_chip,
           dadosEvento.id_evento
         ),
-        endereco_mac: DeviceInfo.getUniqueId(),
+        // endereco_mac: DeviceInfo.getUniqueId(),
         valor_transacao: valorTransacao,
         forma_pagamento: tipoPagamento,
         tipo_operacao_cartao: tipoOperacaoCartao,
-        tipo_transacao: 'C',
+        tipo_transacao: 'CREDITO',
         tipo_operacao_credito: tipoPagamentoSelecionado,
         descricao_pagamento: descricaoSelecionada,
       });
@@ -96,9 +96,9 @@ export default function TipoPagamentoCredito({ navigation }) {
 
   function handleTipoPagamento(item) {
     if (item.id === 1) {
-      setTipoPagamentoSelecionado('V');
+      setTipoPagamentoSelecionado('VISTA');
     } else {
-      setTipoPagamentoSelecionado('P');
+      setTipoPagamentoSelecionado('PRAZO');
     }
     setDescricaoSelecionada(item.descricao);
     handleModalPergunta(

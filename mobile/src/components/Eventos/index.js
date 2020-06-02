@@ -1,13 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import Funcoes from '~/utils/Funcoes';
 
 import { Container, Left, Info, NomeEvento, DataHorario } from './styles';
 
 export default function Eventos({ data, onCancel }) {
-  const dateParsed = useMemo(() => {
-    return Funcoes.strToDate(data.data_inicio);
-  }, [data.data_inicio]);
   return (
     <Container>
       <TouchableOpacity onPress={onCancel} style={{ flex: 1 }}>
@@ -15,7 +11,7 @@ export default function Eventos({ data, onCancel }) {
           <Info>
             <NomeEvento>{data.nome_evento}</NomeEvento>
             <DataHorario>
-              {dateParsed} ás {data.hora_inicio}
+              Horário de Início : Ás {data.hora_inicio} Horas.
             </DataHorario>
           </Info>
         </Left>

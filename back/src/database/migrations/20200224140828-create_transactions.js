@@ -61,7 +61,7 @@ module.exports = {
         allowNull: true
       },
       data_cancelamento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
       },
       hora_cancelamento: {

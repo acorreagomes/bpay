@@ -23,7 +23,7 @@ export default function TransacoesCreditoTipoPagamento({ navigation }) {
         <View style={styles.ContainerBotoesFormaPgto}>
           <TouchableOpacity
             style={styles.Buttons}
-            onPress={() => handleModalTipoPagamento('D', 'D')}
+            onPress={() => handleModalTipoPagamento('DINHEIRO', 'DEBITO')}
           >
             <View style={styles.ContainerItensButtons}>
               <Icon name="receipt" size={30} color={Colors.COLORS.WHITE} />
@@ -33,7 +33,7 @@ export default function TransacoesCreditoTipoPagamento({ navigation }) {
 
           <TouchableOpacity
             style={styles.Buttons}
-            onPress={() => handleModalTipoPagamento('C', 'C')}
+            onPress={() => handleModalTipoPagamento('CREDITO', 'CREDITO')}
           >
             <View style={styles.ContainerItensButtons}>
               <Icon name="payment" size={30} color={Colors.COLORS.WHITE} />
@@ -43,7 +43,7 @@ export default function TransacoesCreditoTipoPagamento({ navigation }) {
 
           <TouchableOpacity
             style={styles.Buttons}
-            onPress={() => handleModalTipoPagamento('C', 'D')}
+            onPress={() => handleModalTipoPagamento('CREDITO', 'DEBITO')}
           >
             <View style={styles.ContainerItensButtons}>
               <Icon name="payment" size={30} color={Colors.COLORS.WHITE} />

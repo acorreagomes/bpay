@@ -81,17 +81,17 @@ export default function Principal({ navigation }) {
       );
       if (response.data.error) {
         showMessage(response.data.error, 'error');
-      } else if (tipoTransacao === 'D') {
+      } else if (tipoTransacao === 'DEBITO') {
         navigation.navigate('TransacoesDebito', {
           data: response.data,
           dadosEvento,
         });
-      } else if (tipoTransacao === 'C') {
+      } else if (tipoTransacao === 'CREDITO') {
         navigation.navigate('TransacoesCreditoTipoPagamento', {
           data: response.data,
           dadosEvento,
         });
-      } else if (tipoTransacao === 'S') {
+      } else if (tipoTransacao === 'CONSULTA_CARTAO') {
         navigation.navigate('ConsultaCartao', {
           data: response.data,
         });
@@ -157,7 +157,7 @@ export default function Principal({ navigation }) {
           >
             <TouchableOpacity
               style={styles.ButtonCredito}
-              onPress={() => handleNFCVisible(true, 'C')}
+              onPress={() => handleNFCVisible(true, 'CREDITO')}
             >
               <Icon name="store" size={30} color={Colors.COLORS.WHITE} />
             </TouchableOpacity>
@@ -168,7 +168,7 @@ export default function Principal({ navigation }) {
           >
             <TouchableOpacity
               style={styles.ButtonCredito}
-              onPress={() => handleNFCVisible(true, 'D')}
+              onPress={() => handleNFCVisible(true, 'DEBITO')}
             >
               <Icon name="payment" size={30} color={Colors.COLORS.WHITE} />
             </TouchableOpacity>
@@ -181,7 +181,7 @@ export default function Principal({ navigation }) {
           >
             <TouchableOpacity
               style={styles.ButtonCredito}
-              onPress={() => handleNFCVisible(true, 'S')}
+              onPress={() => handleNFCVisible(true, 'CONSULTA_CARTAO')}
             >
               <Icon name="search" size={30} color={Colors.COLORS.WHITE} />
             </TouchableOpacity>

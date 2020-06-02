@@ -16,7 +16,7 @@ class Transacoes extends Model {
       descricao_sangria_suprimentos: Sequelize.STRING,
       cancelada: Sequelize.BOOLEAN,
       id_usuario_cancelou: Sequelize.INTEGER,
-      data_cancelamento: Sequelize.DATE,
+      data_cancelamento: Sequelize.DATEONLY,
       hora_cancelamento: Sequelize.TIME,
     }, {
       sequelize,

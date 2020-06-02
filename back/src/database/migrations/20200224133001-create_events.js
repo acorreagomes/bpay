@@ -16,11 +16,11 @@ module.exports = {
         allowNull: false,
       },
       data_inicio: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       data_termino: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       hora_inicio: {
@@ -33,15 +33,18 @@ module.exports = {
       },
       valor_min_parcelamento: {
         type: Sequelize.DECIMAL,
-        allowNull: true
+        allowNull: false,
+        defaultValue: 0
       },
       percentual_juros_parcelamento: {
         type: Sequelize.DECIMAL,
-        allowNull: true
+        allowNull: false,
+        defaultValue: 0
       },
       qtde_max_parcelas: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: false,
+        defaultValue: 0
       },
       multiplos_cartoes_cliente: {
         type: Sequelize.BOOLEAN,

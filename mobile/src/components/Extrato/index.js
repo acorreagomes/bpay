@@ -9,7 +9,7 @@ export default function Extrato({ data }) {
       <Left>
         <Info>
           <Descricao>
-            {data.tipo_transacao === 'C' ? 'Crédito' : 'Débito'} de R${' '}
+            {data.tipo_transacao === 'CREDITO' ? 'Crédito' : 'Débito'} de R${' '}
             {Number(data.valor_transacao).toFixed(2)}
           </Descricao>
           <Detalhes>Local: {data.setor.nome_setor}</Detalhes>
@@ -18,7 +18,7 @@ export default function Extrato({ data }) {
       </Left>
       <TouchableOpacity onPress={() => { }}>
         <Icon
-          name={data.tipo_transacao === 'C' ? 'add' : 'remove'}
+          name={data.tipo_transacao === 'CREDITO' ? 'add' : 'remove'}
           size={25}
           color="#fff"
         />
