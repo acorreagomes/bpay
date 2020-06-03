@@ -122,6 +122,15 @@ Relatorios.navigationOptions = ({ navigation }) => ({
       <Icon name="arrow-back" size={30} color={Colors.COLORS.WHITE} />
     </TouchableOpacity>
   ),
+  headerRight: () => (
+    <TouchableOpacity
+      onPress={() => {
+        // RelatorioCaixaEvento();
+      }}
+    >
+      <Icon name="refresh" size={30} color={Colors.COLORS.WHITE} />
+    </TouchableOpacity>
+  ),
 });
 
 const styles = StyleSheet.create({

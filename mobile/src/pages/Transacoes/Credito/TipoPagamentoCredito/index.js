@@ -110,6 +110,7 @@ export default function TipoPagamentoCredito({ navigation }) {
     function calculaParcelas() {
       setMensagemLoading('Analisando...');
       setLoading(true);
+
       // eslint-disable-next-line no-plusplus
       for (let i = 2; i <= dadosEvento.qtde_max_parcelas; i++) {
         const valorParcelas = valorTransacao / i;

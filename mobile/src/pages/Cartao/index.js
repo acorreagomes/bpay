@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Background from '~/components/Background';
@@ -9,7 +10,7 @@ import Colors from '~/constants/Colors';
 
 export default function Cartao({ navigation }) {
   const data = navigation.getParam('data');
-
+  const perfilUsuario = useSelector(state => state.auth.profile);
   return (
     <Background>
       <View style={styles.Container}>
@@ -34,7 +35,9 @@ export default function Cartao({ navigation }) {
                     <List
                       data={data.extrato}
                       keyExtractor={item => String(item.id)}
-                      renderItem={({ item }) => <Extrato data={item} />}
+                      renderItem={({ item }) => (
+                        <Extrato data={item} profile={perfilUsuario} />
+                      )}
                     />
                   </Container>
                 )}

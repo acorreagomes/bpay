@@ -3,7 +3,12 @@ import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Left, Info, Descricao, Detalhes } from './styles';
 
-export default function Extrato({ data }) {
+export default function Extrato({ data, profile }) {
+  function cancelamento(id) {
+    // usar funcao de pergunta...
+    alert(id);
+  }
+
   return (
     <Container>
       <Left>
@@ -16,12 +21,11 @@ export default function Extrato({ data }) {
           <Detalhes>Atendente: {data.usuario.nome}</Detalhes>
         </Info>
       </Left>
-      <TouchableOpacity onPress={() => { }}>
-        <Icon
-          name={data.tipo_transacao === 'CREDITO' ? 'add' : 'remove'}
-          size={25}
-          color="#fff"
-        />
+      <TouchableOpacity
+        style={{ display: profile.id === 0 ? 'flex' : 'none' }}
+        onPress={() => cancelamento(data.id)}
+      >
+        <Icon name="clear" size={25} color="#fff" />
       </TouchableOpacity>
     </Container>
   );

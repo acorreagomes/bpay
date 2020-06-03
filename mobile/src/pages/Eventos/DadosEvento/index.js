@@ -97,7 +97,6 @@ export default function DadosEvento({ navigation }) {
   }
 
   useEffect(() => {
-    let mounted = true;
     async function recuperaDadosEventoStorage() {
       try {
         const dados = await AsyncStorage.multiGet([
@@ -118,10 +117,7 @@ export default function DadosEvento({ navigation }) {
         // /
       }
     }
-    if (mounted) {
-      recuperaDadosEventoStorage();
-      mounted = false;
-    }
+    recuperaDadosEventoStorage();
   });
 
   return (
