@@ -38,7 +38,7 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
     } else if (
       valorTransacao >= dadosEvento.valor_min_parcelamento &&
       dadosEvento.valor_min_parcelamento > 0 &&
-      tipoPagamento === 'CREDITO' &&
+      tipoPagamento === 'CARTAO' &&
       tipoOperacaoCartao === 'CREDITO'
     ) {
       navigation.navigate('TipoPagamentoCredito', {

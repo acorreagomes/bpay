@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Background from '~/components/Background';
 import Colors from '~/constants/Colors';
@@ -33,7 +33,7 @@ export default function TransacoesCreditoTipoPagamento({ navigation }) {
 
           <TouchableOpacity
             style={styles.Buttons}
-            onPress={() => handleModalTipoPagamento('CREDITO', 'CREDITO')}
+            onPress={() => handleModalTipoPagamento('CARTAO', 'CREDITO')}
           >
             <View style={styles.ContainerItensButtons}>
               <Icon name="payment" size={30} color={Colors.COLORS.WHITE} />
@@ -43,7 +43,7 @@ export default function TransacoesCreditoTipoPagamento({ navigation }) {
 
           <TouchableOpacity
             style={styles.Buttons}
-            onPress={() => handleModalTipoPagamento('CREDITO', 'DEBITO')}
+            onPress={() => handleModalTipoPagamento('CARTAO', 'DEBITO')}
           >
             <View style={styles.ContainerItensButtons}>
               <Icon name="payment" size={30} color={Colors.COLORS.WHITE} />

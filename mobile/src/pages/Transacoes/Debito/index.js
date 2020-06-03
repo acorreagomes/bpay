@@ -51,6 +51,7 @@ export default function TransacoesDebito({ navigation }) {
         ),
         valor_transacao: valorTransacao,
         forma_pagamento: 'DINHEIRO',
+        // remover depois, porem ver no servidor antes...
         tipo_operacao_cartao: 'DEBITO',
         tipo_transacao: 'DEBITO',
       });

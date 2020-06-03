@@ -188,11 +188,6 @@ class TransacaoController {
     return res.json(datas);
   }
 
-
-
-
-
-
   async cancelamento(req, res) {
 
     const usuario = await Usuario.findByPk(req.userId);
@@ -207,6 +202,19 @@ class TransacaoController {
     if (transacao.cancelada) {
       return res.status(200).json({ error: 'Transação já cancelada!' });
     }
+
+    if (transacao.tipo_transacao === 'CREDITO') {
+      const cartao = await Cartao.findOne({ where: { id: transacao.id_cartao } });
+
+      if (cartao.bloqueado) {
+        return res.status(200).json({ error: 'Cartão Bloqueado!' });
+      };
+
+      if (transacao.valor_transacao > cartao.saldo) {
+        return res.status(200).json({ error: 'Valor do Cancelamento é maior que o Saldo do Cartão!' });
+      };
+    }
+
     const setor = await Setor.findByPk(transacao.id_setor);
 
     const evento = await Evento.findByPk(setor.id_evento);
