@@ -23,7 +23,8 @@ export const Info = styled.View``;
 export const Descricao = styled.Text`
   font-weight: bold;
   font-size: 14px;
-  color: #fff;
+  text-decoration: ${props => (props.cancelada ? 'line-through' : null)};
+  color: ${props => (props.cancelada ? 'gray' : '#fff')};
 `;
 
 export const Detalhes = styled.Text`
