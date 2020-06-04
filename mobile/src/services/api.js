@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const AT_JOB = 'http://192.168.1.131:9999';
+const AT_HOME = 'http://10.0.0.103:9999';
+
 const api = axios.create({
-  baseURL: 'http:/10.0.0.103:9999',
+  baseURL: AT_JOB,
 });
 
 export default api;

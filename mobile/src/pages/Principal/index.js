@@ -93,7 +93,8 @@ export default function Principal({ navigation }) {
         });
       } else if (tipoTransacao === 'CONSULTA_CARTAO') {
         navigation.navigate('ConsultaCartao', {
-          data: response.data,
+          numero_chip,
+          id_evento: dadosEvento.id_evento,
         });
       }
     } catch (error) {

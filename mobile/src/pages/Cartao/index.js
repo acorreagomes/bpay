@@ -1,19 +1,83 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import api from '~/services/api';
 import Background from '~/components/Background';
 import Extrato from '~/components/Extrato';
 import DadosCartao from '~/components/Cartao';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
+import Loading from '~/components/Loading';
+import Funcoes from '~/utils/Funcoes';
 
 export default function Cartao({ navigation }) {
-  const data = navigation.getParam('data');
+  const numero_chip = navigation.getParam('numero_chip');
+  const id_evento = navigation.getParam('id_evento');
+
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [renderizado, setRenderizado] = useState(false);
+
   const perfilUsuario = useSelector(state => state.auth.profile);
+
+  async function ConsultaCartao() {
+    try {
+      setLoading(true);
+      const response = await api.get(
+        `/cartoes/situacao?numero=${Funcoes.CalculatedCardNumber(
+          numero_chip,
+          id_evento
+        )}`
+      );
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        setData(response.data);
+        setRenderizado(true);
+      }
+    } catch (error) {
+      alert(error);
+    }
+    setLoading(false);
+  }
+
+  function Refresh() {
+    alert('refresh');
+    // ConsultaCartao();
+  }
+
+  useEffect(() => {
+    Refresh();
+  }, [Refresh]);
+
   return (
     <Background>
-      <View style={styles.Container}>
+      {renderizado ? (
+        <View>
+          <Text style={styles.Titulo}>{data.cartao.saldo}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              Refresh();
+            }}
+          >
+            <Text style={styles.Titulo}>Clica</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+          <View>
+            <Text style={styles.Titulo}>nothing</Text>
+            <TouchableOpacity
+              onPress={() => {
+                Refresh();
+              }}
+            >
+              <Text style={styles.Titulo}>Clica</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      {/* <Text style={styles.Titulo}>Dados do Cartão</Text> */}
+      {/* <View style={styles.Container}>
         <Text style={styles.Titulo}>Dados do Cartão</Text>
         <View style={styles.linhaSeparacao} />
         <View style={styles.ContainerMain}>
@@ -58,7 +122,8 @@ export default function Cartao({ navigation }) {
             R$ {Number(data.cartao.saldo).toFixed(2)}
           </Text>
         </View>
-      </View>
+      </View> */}
+      <Loading loading={loading} message="Consultando Cartão..." />
     </Background>
   );
 }
