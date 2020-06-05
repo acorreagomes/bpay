@@ -33,7 +33,7 @@ export default (logado = false, perfilUsuario = null) =>
               screenDrawer: createDrawerNavigator(
                 {
                   Principal,
-                  ConsultaCartao,
+                  //ConsultaCartao,
                   Configuracoes,
                   // screenConsulta: perfilUsuario.acessa_consulta_cartao
                   //   ? ConsultaCartao

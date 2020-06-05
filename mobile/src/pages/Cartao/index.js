@@ -9,6 +9,7 @@ import DadosCartao from '~/components/Cartao';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
 import Loading from '~/components/Loading';
+import Mensagens from '~/components/Mensagens';
 import Funcoes from '~/utils/Funcoes';
 
 export default function Cartao({ navigation }) {
@@ -18,111 +19,122 @@ export default function Cartao({ navigation }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [renderizado, setRenderizado] = useState(false);
+  const [dialogType, setDialogType] = useState('');
+  const [dialogMessage, setDialogMessage] = useState('');
+  const [isDialogVisible, setisDialogVisible] = useState(false);
 
   const perfilUsuario = useSelector(state => state.auth.profile);
 
-  async function ConsultaCartao() {
+  function showMessage(Message, DialogType = '') {
+    setDialogType(DialogType);
+    setDialogMessage(Message);
+    setisDialogVisible(true);
+  }
+
+  async function cancelamento(id) {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await api.get(
-        `/cartoes/situacao?numero=${Funcoes.CalculatedCardNumber(
-          numero_chip,
-          id_evento
-        )}`
-      );
+      const response = await api.delete(`/transacoes/${id}/cancelar`);
       if (response.data.error) {
-        alert(response.data.error);
+        showMessage(response.data.error, 'error');
       } else {
-        setData(response.data);
-        setRenderizado(true);
+        showMessage('Cancelado com Sucesso!');
+        setRenderizado(false);
       }
+      setLoading(false);
     } catch (error) {
       alert(error);
     }
-    setLoading(false);
-  }
-
-  function Refresh() {
-    alert('refresh');
-    // ConsultaCartao();
   }
 
   useEffect(() => {
-    Refresh();
-  }, [Refresh]);
+    async function ConsultaCartao() {
+      try {
+        setLoading(true);
+        const response = await api.get(
+          `/cartoes/situacao?numero=${Funcoes.CalculatedCardNumber(
+            numero_chip,
+            id_evento
+          )}`
+        );
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setData(response.data);
+          setRenderizado(true);
+        }
+      } catch (error) {
+        alert(error);
+      }
+      setLoading(false);
+    }
+    ConsultaCartao();
+  }, [id_evento, numero_chip, renderizado]);
 
   return (
     <Background>
       {renderizado ? (
-        <View>
-          <Text style={styles.Titulo}>{data.cartao.saldo}</Text>
-          <TouchableOpacity
-            onPress={() => {
-              Refresh();
-            }}
-          >
-            <Text style={styles.Titulo}>Clica</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-          <View>
-            <Text style={styles.Titulo}>nothing</Text>
-            <TouchableOpacity
-              onPress={() => {
-                Refresh();
-              }}
-            >
-              <Text style={styles.Titulo}>Clica</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      {/* <Text style={styles.Titulo}>Dados do Cartão</Text> */}
-      {/* <View style={styles.Container}>
-        <Text style={styles.Titulo}>Dados do Cartão</Text>
-        <View style={styles.linhaSeparacao} />
-        <View style={styles.ContainerMain}>
-          <View style={styles.linhaSeparacao} />
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View style={{ flex: 1, alignItems: 'center' }}>
-              <DadosCartao data={data} />
+        <>
+          <View style={styles.Container}>
+            <Text style={styles.Titulo}>Dados do Cartão</Text>
+            <View style={styles.linhaSeparacao} />
+            <View style={styles.ContainerMain}>
               <View style={styles.linhaSeparacao} />
-              <Text style={styles.Titulo}>Extrato do Cartão</Text>
-              <View style={styles.linhaSeparacao} />
-              {data.extrato.length === 0 ? (
-                <View style={styles.ContainerSemMovimentacoes}>
-                  <Text style={styles.TextoSemMovimentacao}>
-                    === Cartão sem Movimentação ===
-                  </Text>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                  <DadosCartao data={data} />
+                  <View style={styles.linhaSeparacao} />
+                  <Text style={styles.Titulo}>Extrato do Cartão</Text>
+                  <View style={styles.linhaSeparacao} />
+                  {data.extrato.length === 0 ? (
+                    <View style={styles.ContainerSemMovimentacoes}>
+                      <Text style={styles.TextoSemMovimentacao}>
+                        === Cartão sem Movimentação ===
+                      </Text>
+                    </View>
+                  ) : (
+                    <Container>
+                      <List
+                        data={data.extrato}
+                        keyExtractor={item => String(item.id)}
+                        renderItem={({ item }) => (
+                          <Extrato
+                            data={item}
+                            profile={perfilUsuario}
+                            cancel={() => cancelamento(item.id)}
+                          />
+                        )}
+                      />
+                    </Container>
+                  )}
                 </View>
-              ) : (
-                  <Container>
-                    <List
-                      data={data.extrato}
-                      keyExtractor={item => String(item.id)}
-                      renderItem={({ item }) => (
-                        <Extrato data={item} profile={perfilUsuario} />
-                      )}
-                    />
-                  </Container>
-                )}
+              </View>
             </View>
           </View>
-        </View>
-      </View>
-      <View style={styles.ContainerSaldo2}>
-        <View style={styles.ContainerSaldo}>
-          <Text style={styles.SaldoCartaoTitulo}>Saldo do Cartão</Text>
-          <Text
-            style={
-              data.cartao.saldo === 0
-                ? styles.SaldoCartaoValorZerado
-                : styles.SaldoCartaoValorPositivo
-            }
-          >
-            R$ {Number(data.cartao.saldo).toFixed(2)}
-          </Text>
-        </View>
-      </View> */}
+          <View style={styles.ContainerSaldo2}>
+            <View style={styles.ContainerSaldo}>
+              <Text style={styles.SaldoCartaoTitulo}>Saldo do Cartão</Text>
+              <Text
+                style={
+                  data.cartao.saldo === 0
+                    ? styles.SaldoCartaoValorZerado
+                    : styles.SaldoCartaoValorPositivo
+                }
+              >
+                R$ {Number(data.cartao.saldo).toFixed(2)}
+              </Text>
+            </View>
+          </View>
+        </>
+      ) : (
+        <View />
+      )}
+      <Mensagens
+        type={dialogType}
+        visible={isDialogVisible}
+        message={dialogMessage}
+        close={() => setisDialogVisible(false)}
+      />
       <Loading loading={loading} message="Consultando Cartão..." />
     </Background>
   );
