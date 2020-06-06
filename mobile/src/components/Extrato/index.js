@@ -13,6 +13,11 @@ export default function Extrato({ data, profile, cancel }) {
     setPerguntaModalVisible(true);
   }
 
+  function handleConfirm() {
+    setPerguntaModalVisible(false);
+    cancel();
+  }
+
   return (
     <>
       <Container>
@@ -33,7 +38,7 @@ export default function Extrato({ data, profile, cancel }) {
           }}
           onPress={() =>
             handleModalPergunta(
-              `ATENÇÃO!!! \n\n Uma vez cancelado não poderá mais ser revertido! \n\n Confirma o Cancelamento ?`
+              `ATENÇÃO!!! \n\n Tem certeza que deseja cancelar essa transação permanentemente?`
             )
           }
         >
@@ -44,7 +49,7 @@ export default function Extrato({ data, profile, cancel }) {
         visible={isPerguntaModalVisible}
         message={questionMessage}
         close={() => setPerguntaModalVisible(false)}
-        confirm={cancel}
+        confirm={() => handleConfirm()}
       />
     </>
   );

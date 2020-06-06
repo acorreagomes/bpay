@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
 import Colors from '~/constants/Colors';
+import Estilos from '~/constants/Estilos';
 import Loading from '~/components/Loading';
 import Mensagens from '~/components/Mensagens';
 import Pergunta from '~/components/Pergunta';
@@ -73,7 +75,13 @@ export default function TransacoesCreditoValorPagamento({ navigation }) {
       if (response.data.error) {
         showMessage(response.data.error, 'error');
       } else {
-        showMessage('Recarga efetuada com Sucesso!');
+        navigation.navigate('Principal');
+        Toast.show(
+          'Recarga efetuada com Sucesso!',
+          Toast.SHORT,
+          Toast.BOTTOM,
+          Estilos.TOAST_STYLE
+        );
       }
       setLoading(false);
     } catch (error) {

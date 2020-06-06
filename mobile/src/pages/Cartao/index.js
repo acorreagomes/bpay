@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import Toast from 'react-native-toast-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 import Background from '~/components/Background';
@@ -8,6 +9,7 @@ import Extrato from '~/components/Extrato';
 import DadosCartao from '~/components/Cartao';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
+import Estilos from '~/constants/Estilos';
 import Loading from '~/components/Loading';
 import Mensagens from '~/components/Mensagens';
 import Funcoes from '~/utils/Funcoes';
@@ -38,11 +40,17 @@ export default function Cartao({ navigation }) {
       if (response.data.error) {
         showMessage(response.data.error, 'error');
       } else {
-        showMessage('Cancelado com Sucesso!');
         setRenderizado(false);
+        Toast.show(
+          'Cancelado com Sucesso!',
+          Toast.SHORT,
+          Toast.BOTTOM,
+          Estilos.TOAST_STYLE
+        );
       }
       setLoading(false);
     } catch (error) {
+      // eslint-disable-next-line no-alert
       alert(error);
     }
   }
