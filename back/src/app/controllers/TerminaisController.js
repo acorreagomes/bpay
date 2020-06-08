@@ -15,7 +15,7 @@ class TerminaisController {
 
     const MacExistente = await Terminais.findOne({ where: { endereco_mac: req.body.endereco_mac } });
     if (MacExistente) {
-      return res.status(200).json({ error: 'Terminal já cadastrado!' });
+      return res.status(409).json({ error: 'Terminal já cadastrado!' });
     }
 
     const { id } = await Terminais.create(req.body);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import DeviceInfo from 'react-native-device-info';
 import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
@@ -59,7 +58,6 @@ export default function TipoPagamentoCredito({ navigation }) {
           data.cartao.id_chip,
           dadosEvento.id_evento
         ),
-        // endereco_mac: DeviceInfo.getUniqueId(),
         valor_transacao: valorTransacao,
         forma_pagamento: tipoPagamento,
         tipo_operacao_cartao: tipoOperacaoCartao,

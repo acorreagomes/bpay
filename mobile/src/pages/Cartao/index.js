@@ -50,7 +50,6 @@ export default function Cartao({ navigation }) {
       }
       setLoading(false);
     } catch (error) {
-      // eslint-disable-next-line no-alert
       alert(error);
     }
   }
@@ -101,20 +100,20 @@ export default function Cartao({ navigation }) {
                       </Text>
                     </View>
                   ) : (
-                    <Container>
-                      <List
-                        data={data.extrato}
-                        keyExtractor={item => String(item.id)}
-                        renderItem={({ item }) => (
-                          <Extrato
-                            data={item}
-                            profile={perfilUsuario}
-                            cancel={() => cancelamento(item.id)}
-                          />
-                        )}
-                      />
-                    </Container>
-                  )}
+                      <Container>
+                        <List
+                          data={data.extrato}
+                          keyExtractor={item => String(item.id)}
+                          renderItem={({ item }) => (
+                            <Extrato
+                              data={item}
+                              profile={perfilUsuario}
+                              cancel={() => cancelamento(item.id)}
+                            />
+                          )}
+                        />
+                      </Container>
+                    )}
                 </View>
               </View>
             </View>
@@ -135,8 +134,8 @@ export default function Cartao({ navigation }) {
           </View>
         </>
       ) : (
-        <View />
-      )}
+          <View />
+        )}
       <Mensagens
         type={dialogType}
         visible={isDialogVisible}

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import DeviceInfo from 'react-native-device-info';
 import Modal from 'react-native-modal';
 import NfcManager, { NfcEvents } from 'react-native-nfc-manager';
 import AnimatedLoader from 'react-native-animated-loader';
@@ -103,6 +104,7 @@ export default function Principal({ navigation }) {
     handleNFCVisible(false, '');
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function handleNumeroChip(tag) {
     handleLoading(true, 'Consultando Cartão...');
     SituacaoCartao(tag.id);
@@ -114,6 +116,7 @@ export default function Principal({ navigation }) {
         const dados = await AsyncStorage.multiGet([
           'id_evento',
           'id_setor',
+          'id_terminal',
           'valor_min_parcelamento',
           'percentual_juros_parcelamento',
           'qtde_max_parcelas',
@@ -121,9 +124,10 @@ export default function Principal({ navigation }) {
         setDadosEvento({
           id_evento: dados[0][1],
           id_setor: dados[1][1],
-          valor_min_parcelamento: dados[2][1],
-          percentual_juros_parcelamento: dados[3][1],
-          qtde_max_parcelas: dados[4][1],
+          id_terminal: dados[2][1],
+          valor_min_parcelamento: dados[3][1],
+          percentual_juros_parcelamento: dados[4][1],
+          qtde_max_parcelas: dados[5][1],
         });
       } catch (error) {
         showMessage(error, 'error');
@@ -133,12 +137,38 @@ export default function Principal({ navigation }) {
   }, []);
 
   useEffect(() => {
+    async function setIdTerminal(idTerminal) {
+      try {
+        await AsyncStorage.setItem('id_terminal', idTerminal);
+      } catch (error) {
+        showMessage(error, 'error');
+      }
+    }
+
+    async function CadastraTerminal() {
+      try {
+        const response = await api.post('/terminais', {
+          endereco_mac: DeviceInfo.getUniqueId(),
+        });
+        if (response.status === 409) {
+          setIdTerminal(response.data.id);
+        }
+      } catch (error) {
+        showMessage(error, 'error');
+      }
+    }
+    if (!dadosEvento.id_terminal) {
+      CadastraTerminal();
+    }
+  }, [dadosEvento.id_terminal]);
+
+  useEffect(() => {
     NfcManager.start();
     NfcManager.setEventListener(NfcEvents.DiscoverTag, tag => {
       handleNumeroChip(tag);
       NfcManager.unregisterTagEvent().catch(() => 0);
     });
-  }, [handleNumeroChip]);
+  }, [dadosEvento.id_terminal, handleNumeroChip]);
 
   return (
     <Background>
