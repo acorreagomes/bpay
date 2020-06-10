@@ -53,7 +53,7 @@ export default function TipoPagamentoCredito({ navigation }) {
         id_evento: dadosEvento.id_evento,
         id_setor: dadosEvento.id_setor,
         id_chip: data.cartao.id_chip,
-        id_terminal: 1,
+        id_terminal: dadosEvento.id_terminal,
         numero_cartao: Funcoes.CalculatedCardNumber(
           data.cartao.id_chip,
           dadosEvento.id_evento

@@ -14,12 +14,14 @@ class TerminaisController {
     };
 
     const MacExistente = await Terminais.findOne({ where: { endereco_mac: req.body.endereco_mac } });
-    if (MacExistente) {
-      return res.status(409).json({ error: 'Terminal já cadastrado!' });
-    }
-
-    const { id } = await Terminais.create(req.body);
-    return res.json({ id });
+    // if (MacExistente) {
+    //   const { id } = MacExistente;
+    //   return res.json({ id });
+    // } else {
+    //const { id } = await Terminais.create(req.body);
+    //return res.json({ id });
+    //  }
+    return res.json(MacExistente);
   }
 
 }

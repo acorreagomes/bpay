@@ -111,6 +111,30 @@ export default function Principal({ navigation }) {
   }
 
   useEffect(() => {
+    async function setIdTerminal(idTerminal) {
+      try {
+        await AsyncStorage.setItem('id_terminal', idTerminal.toString());
+      } catch (error) {
+        // alert(error);
+      }
+    }
+    async function CadastraTerminal() {
+      try {
+        const response = await api.post('/terminais', {
+          endereco_mac: DeviceInfo.getUniqueId(),
+          fabricante: DeviceInfo.getBrand().toUpperCase(),
+          modelo: (await DeviceInfo.getDeviceName()).toString(),
+        });
+
+        if (response.data.error) {
+          showMessage(response.data.error, 'error');
+        } else {
+          setIdTerminal(response.data.id);
+        }
+      } catch (error) {
+        // alert(error);
+      }
+    }
     async function getEventoSelecionado() {
       try {
         const dados = await AsyncStorage.multiGet([
@@ -129,37 +153,15 @@ export default function Principal({ navigation }) {
           percentual_juros_parcelamento: dados[4][1],
           qtde_max_parcelas: dados[5][1],
         });
+        alert(dados[2][1]);
+        if (!dados[2][1]) {
+          CadastraTerminal();
+        }
       } catch (error) {
-        showMessage(error, 'error');
+        // alert(error);
       }
     }
     getEventoSelecionado();
-  }, []);
-
-  useEffect(() => {
-    async function setIdTerminal(idTerminal) {
-      try {
-        await AsyncStorage.setItem('id_terminal', idTerminal);
-      } catch (error) {
-        showMessage(error, 'error');
-      }
-    }
-
-    async function CadastraTerminal() {
-      try {
-        const response = await api.post('/terminais', {
-          endereco_mac: DeviceInfo.getUniqueId(),
-        });
-        if (response.status === 409) {
-          setIdTerminal(response.data.id);
-        }
-      } catch (error) {
-        showMessage(error, 'error');
-      }
-    }
-    if (!dadosEvento.id_terminal) {
-      CadastraTerminal();
-    }
   }, [dadosEvento.id_terminal]);
 
   useEffect(() => {
@@ -168,7 +170,7 @@ export default function Principal({ navigation }) {
       handleNumeroChip(tag);
       NfcManager.unregisterTagEvent().catch(() => 0);
     });
-  }, [dadosEvento.id_terminal, handleNumeroChip]);
+  }, [handleNumeroChip]);
 
   return (
     <Background>
