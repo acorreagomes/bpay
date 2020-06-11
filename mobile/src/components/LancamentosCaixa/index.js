@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Text, TouchableOpacity, Image, View } from 'react-native';
 import Modal from 'react-native-modal';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
+import { Dropdown } from 'react-native-material-dropdown';
 import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
 
 export default function LancamentosCaixa({ visible, close }) {
+  const listRef = useRef();
 
   const [valorTransacao, setValorTransacao] = useState(0);
+  const [tipoLancamento, setTipoLancamento] = useState(0);
+
+  const data = [
+    {
+      value: 'Sangria',
+    },
+    {
+      value: 'Suprimento',
+    },
+    {
+      value: 'Saldo Inicial',
+    },
+  ];
 
   return (
     <View
@@ -28,7 +43,21 @@ export default function LancamentosCaixa({ visible, close }) {
         backdropTransitionOutTiming={600}
       >
         <View style={{ flex: 1, justifyContent: 'center' }}>
-          <NumericInput
+          <Dropdown
+            label="Tipo de Lançamento"
+            textColor={Colors.COLORS.GRAY}
+            baseColor={Colors.COLORS.WHITE}
+            itemColor={Colors.COLORS.GRAY}
+            fontSize={30}
+            data={data}
+            value="Saldo Inicial"
+            ref={listRef}
+            onChangeText={() =>
+              setTipoLancamento(listRef.current.selectedIndex())
+            }
+          />
+
+          {/* <NumericInput
             type="decimal"
             decimalPlaces={2}
             value={valorTransacao}
@@ -49,7 +78,7 @@ export default function LancamentosCaixa({ visible, close }) {
               borderRadius: 5,
               backgroundColor: 'rgba(0, 0, 0, 0.1)',
             }}
-          />
+          /> */}
 
           <TouchableOpacity
             style={{
@@ -60,7 +89,7 @@ export default function LancamentosCaixa({ visible, close }) {
               borderRadius: 8,
               backgroundColor: Colors.COLORS.BUTTON_SUCESS,
             }}
-            onPress={close}
+            onPress={() => alert(tipoLancamento)}
           >
             <Text
               style={{
