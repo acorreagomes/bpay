@@ -153,7 +153,6 @@ export default function Principal({ navigation }) {
           percentual_juros_parcelamento: dados[4][1],
           qtde_max_parcelas: dados[5][1],
         });
-        alert(dados[2][1]);
         if (!dados[2][1]) {
           CadastraTerminal();
         }
