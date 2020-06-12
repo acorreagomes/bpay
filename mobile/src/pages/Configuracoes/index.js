@@ -1,28 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Background from '~/components/Background';
 import Colors from '~/constants/Colors';
 
-import LancamentosCaixa from '~/components/LancamentosCaixa';
-
 export default function Configuracoes({ navigation }) {
-  const dadosEvento = navigation.getParam('dadosEvento');
-  const [visibleModal, setVisibleModal] = useState(false);
-
   return (
     <Background>
-      <View>
-        <TouchableOpacity onPress={() => setVisibleModal(true)}>
-          <Text>Lançar</Text>
-        </TouchableOpacity>
-      </View>
-
-      <LancamentosCaixa
-        visible={visibleModal}
-        dadosEvento={dadosEvento}
-        close={() => setVisibleModal(false)}
-      />
+      <View />
     </Background>
   );
 }

@@ -10,6 +10,7 @@ import AnimatedLoader from 'react-native-animated-loader';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import { signOut } from '~/store/modules/auth/actions';
+import LancamentosCaixa from '~/components/LancamentosCaixa';
 import Funcoes from '~/utils/Funcoes';
 import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
@@ -25,6 +26,7 @@ export default function Principal({ navigation }) {
   const [mensagemLoading, setmensagemLoading] = useState('');
   const [tipoTransacao, setTipoTransacao] = useState('');
   const [isModalDialogVisible, setIsModalDialogVisible] = useState(false);
+  const [lancamentoCaixaVisible, setLancamentoCaixaVisible] = useState(false);
   const [dialogType, setDialogType] = useState('');
   const [dialogMessage, setDialogMessage] = useState('');
   const [dadosEvento, setDadosEvento] = useState({});
@@ -251,19 +253,23 @@ export default function Principal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Relatórios</Text>
           </View>
+
+          <View>
+            <TouchableOpacity
+              style={styles.ButtonCredito}
+              onPress={() => setLancamentoCaixaVisible(true)}
+            >
+              <Icon name="weekend" size={30} color={Colors.COLORS.WHITE} />
+            </TouchableOpacity>
+            <Text style={styles.TextButtons}>Lançamentos</Text>
+          </View>
+
           <View
             style={{
               display: perfilUsuario.acessa_configuracoes ? 'flex' : 'none',
             }}
           >
-            <TouchableOpacity
-              style={styles.ButtonCredito}
-              onPress={() =>
-                navigation.navigate('Configuracoes', {
-                  dadosEvento,
-                })
-              }
-            >
+            <TouchableOpacity style={styles.ButtonCredito}>
               <Icon name="settings" size={30} color={Colors.COLORS.WHITE} />
             </TouchableOpacity>
             <Text style={styles.TextButtons}>Configurações</Text>
@@ -312,6 +318,11 @@ export default function Principal({ navigation }) {
           </View>
         </Modal>
       </View>
+      <LancamentosCaixa
+        visible={lancamentoCaixaVisible}
+        dadosEvento={dadosEvento}
+        close={() => setLancamentoCaixaVisible(false)}
+      />
       <Mensagens
         type={dialogType}
         visible={isModalDialogVisible}
