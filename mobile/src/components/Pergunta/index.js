@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, Image, View } from 'react-native';
 import Modal from 'react-native-modal';
+import PropTypes from 'prop-types';
 import Colors from '~/constants/Colors';
 import Imagens from '~/constants/Images';
 
@@ -93,3 +94,14 @@ export default function Mensagens({ visible, message, close, confirm }) {
     </View>
   );
 }
+
+Mensagens.propTypes = {
+  visible: PropTypes.bool,
+  message: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired,
+  confirm: PropTypes.func.isRequired,
+};
+
+Mensagens.defaultProps = {
+  visible: false,
+};

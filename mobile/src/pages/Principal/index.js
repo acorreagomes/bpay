@@ -258,7 +258,11 @@ export default function Principal({ navigation }) {
           >
             <TouchableOpacity
               style={styles.ButtonCredito}
-              onPress={() => navigation.navigate('Configuracoes')}
+              onPress={() =>
+                navigation.navigate('Configuracoes', {
+                  dadosEvento,
+                })
+              }
             >
               <Icon name="settings" size={30} color={Colors.COLORS.WHITE} />
             </TouchableOpacity>

@@ -7,7 +7,7 @@ import Colors from '~/constants/Colors';
 import LancamentosCaixa from '~/components/LancamentosCaixa';
 
 export default function Configuracoes({ navigation }) {
-
+  const dadosEvento = navigation.getParam('dadosEvento');
   const [visibleModal, setVisibleModal] = useState(false);
 
   return (
@@ -20,6 +20,7 @@ export default function Configuracoes({ navigation }) {
 
       <LancamentosCaixa
         visible={visibleModal}
+        dadosEvento={dadosEvento}
         close={() => setVisibleModal(false)}
       />
     </Background>

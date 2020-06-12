@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import PropTypes from 'prop-types';
 import Colors from '~/constants/Colors';
 
 export default function Loading({ loading, message }) {
@@ -27,3 +28,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+Loading.propTypes = {
+  loading: PropTypes.bool,
+  message: PropTypes.string.isRequired,
+};
+
+Loading.defaultProps = {
+  loading: false,
+};
