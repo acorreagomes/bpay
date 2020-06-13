@@ -184,7 +184,7 @@ export default function LancamentosCaixa({ visible, dadosEvento, close }) {
                 fontSize: 16,
                 color: Colors.COLORS.GRAY,
               }}
-              maxLength={120}
+              maxLength={255}
               placeholder="Informe a descrição da despesa..."
               placeholderTextColor={Colors.COLORS.GRAY}
               underlineColorAndroid="transparent"
@@ -225,7 +225,7 @@ export default function LancamentosCaixa({ visible, dadosEvento, close }) {
 
 LancamentosCaixa.propTypes = {
   visible: PropTypes.bool,
-  dadosEvento: PropTypes.objectOf.isRequired,
+  dadosEvento: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
 };
 

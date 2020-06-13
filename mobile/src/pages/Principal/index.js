@@ -182,7 +182,7 @@ export default function Principal({ navigation }) {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
+            justifyContent: 'space-between',
             flexWrap: 'wrap',
           }}
         >
