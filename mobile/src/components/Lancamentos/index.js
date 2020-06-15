@@ -13,7 +13,7 @@ import Loading from '~/components/Loading';
 import Mensagens from '~/components/Mensagens';
 import Pergunta from '~/components/Pergunta';
 
-export default function LancamentosCaixa({ visible, dadosEvento, close }) {
+export default function Lancamentos({ visible, dadosEvento, close }) {
   const listRef = useRef();
   const [valorTransacao, setValorTransacao] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -223,12 +223,12 @@ export default function LancamentosCaixa({ visible, dadosEvento, close }) {
   );
 }
 
-LancamentosCaixa.propTypes = {
+Lancamentos.propTypes = {
   visible: PropTypes.bool,
   dadosEvento: PropTypes.func.isRequired,
   close: PropTypes.func.isRequired,
 };
 
-LancamentosCaixa.defaultProps = {
+Lancamentos.defaultProps = {
   visible: false,
 };

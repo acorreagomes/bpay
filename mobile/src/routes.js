@@ -2,7 +2,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import React from 'react';
-import { Alert, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '~/constants/Colors';
 
@@ -19,6 +19,7 @@ import Relatorios from './pages/Relatorios';
 import TransacoesCreditoTipoPagamento from './pages/Transacoes/Credito/TipoPagamento';
 import TransacoesCreditoValorPagamento from './pages/Transacoes/Credito/ValorPagamento';
 import TipoPagamentoCredito from './pages/Transacoes/Credito/TipoPagamentoCredito';
+import LancamentosCaixa from './pages/LancamentosCaixa';
 
 export default (logado = false, perfilUsuario = null) =>
   createAppContainer(
@@ -33,7 +34,7 @@ export default (logado = false, perfilUsuario = null) =>
               screenDrawer: createDrawerNavigator(
                 {
                   Principal,
-                  //ConsultaCartao,
+                  // ConsultaCartao,
                   Configuracoes,
                   // screenConsulta: perfilUsuario.acessa_consulta_cartao
                   //   ? ConsultaCartao
@@ -84,6 +85,7 @@ export default (logado = false, perfilUsuario = null) =>
               TransacoesCreditoTipoPagamento,
               TransacoesCreditoValorPagamento,
               TipoPagamentoCredito,
+              LancamentosCaixa,
             },
             {
               defaultNavigationOptions: {

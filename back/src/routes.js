@@ -42,5 +42,6 @@ routes.get('/setores/eventos/:id_evento', SetorController.setoresEvento);
 routes.post('/setores', SetorController.store);
 
 routes.post('/terminais', TerminalController.store);
+routes.get('/terminais/lancamentos', TerminalController.lancamentos);
 
 export default routes;
