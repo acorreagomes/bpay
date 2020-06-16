@@ -256,7 +256,11 @@ export default function Principal({ navigation }) {
           <View>
             <TouchableOpacity
               style={styles.ButtonCredito}
-              onPress={() => navigation.navigate('LancamentosCaixa')}
+              onPress={() =>
+                navigation.navigate('LancamentosCaixa', {
+                  dadosEvento,
+                })
+              }
             >
               <Icon name="weekend" size={30} color={Colors.COLORS.WHITE} />
             </TouchableOpacity>

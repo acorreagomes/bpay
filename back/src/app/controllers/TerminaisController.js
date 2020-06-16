@@ -33,14 +33,14 @@ class TerminaisController {
     setor.map(setores => setoresCodigo.push(setores.id));
 
     const dadosTerminal = await Terminais.findOne({
-    where: { id : req.query.id_terminal },
-    attributes:
-     [
-       'id',
-       'endereco_mac',
-       'modelo',
-       'fabricante'
-     ],
+      where: { id: req.query.id_terminal },
+      attributes:
+        [
+          'id',
+          'endereco_mac',
+          'modelo',
+          'fabricante'
+        ],
     })
     if (!dadosTerminal) {
       return res.status(200).json({ error: 'Terminal não Encontrado' });
@@ -50,31 +50,32 @@ class TerminaisController {
         id_terminal: req.query.id_terminal,
         id_setor: setoresCodigo,
         tipo_transacao:
-        [
-          "SANGRIA",
-          "SUPRIMENTO",
-          "SALDO_INICIAL"
-        ],
-       },
-      attributes:
-      [
-        'id',
-        'valor_transacao',
-        'tipo_transacao',
-        'cancelada',
-        'descricao_sangria_suprimentos'
-      ],
-      include: [
-      {
-        model: Usuario, as: 'usuario',
-        attributes: ['id', 'nome'],
+          [
+            "SANGRIA",
+            "SUPRIMENTO",
+            "SALDO_INICIAL"
+          ],
       },
-      {
-        model: Setor, as: 'setor',
-        attributes: ['id', 'nome_setor'],
-      }
+      attributes:
+        [
+          'id',
+          'valor_transacao',
+          'tipo_transacao',
+          'cancelada',
+          'descricao_sangria_suprimentos'
+        ],
+      include: [
+        {
+          model: Usuario, as: 'usuario',
+          attributes: ['id', 'nome'],
+        },
+        {
+          model: Setor, as: 'setor',
+          attributes: ['id', 'nome_setor'],
+        }
       ],
-      order: ['id']});
+      order: ['id']
+    });
 
     res.json({
       'terminal': dadosTerminal,

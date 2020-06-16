@@ -5,17 +5,17 @@ import Toast from 'react-native-toast-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 import Background from '~/components/Background';
-import Extrato from '~/components/Extrato';
-import DadosCartao from '~/components/Cartao';
+import ItemsLancamento from '~/components/ItemsLancamento';
+import DadosTerminal from '~/components/DadosTerminal';
 import { Container, List } from './styles';
 import Colors from '~/constants/Colors';
 import Estilos from '~/constants/Estilos';
 import Loading from '~/components/Loading';
 import Mensagens from '~/components/Mensagens';
-import Funcoes from '~/utils/Funcoes';
+import Lancamentos from '~/components/Lancamentos';
 
 export default function LancamentosCaixa({ navigation }) {
-  const id_evento = navigation.getParam('id_evento');
+  const dadosEvento = navigation.getParam('dadosEvento');
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -23,6 +23,7 @@ export default function LancamentosCaixa({ navigation }) {
   const [dialogType, setDialogType] = useState('');
   const [dialogMessage, setDialogMessage] = useState('');
   const [isDialogVisible, setisDialogVisible] = useState(false);
+  const [isLancamentoVisible, setIsLancamentoVisible] = useState(false);
 
   const perfilUsuario = useSelector(state => state.auth.profile);
 
@@ -54,94 +55,97 @@ export default function LancamentosCaixa({ navigation }) {
   }
 
   useEffect(() => {
-    // async function ConsultaCartao() {
-    //   try {
-    //     setLoading(true);
-    //     const response = await api.get(
-    //       `/cartoes/situacao?numero=${Funcoes.CalculatedCardNumber(
-    //         numero_chip,
-    //         id_evento
-    //       )}`
-    //     );
-    //     if (response.data.error) {
-    //       alert(response.data.error);
-    //     } else {
-    //       setData(response.data);
-    //       setRenderizado(true);
-    //     }
-    //   } catch (error) {
-    //     alert(error);
-    //   }
-    //   setLoading(false);
-    // }
-    // ConsultaCartao();
-  }, [id_evento, renderizado]);
+    async function ConsultaTerminal() {
+      try {
+        setLoading(true);
+        const response = await api.get(
+          `/terminais/lancamentos?id_terminal=${dadosEvento.id_terminal}&id_evento=${dadosEvento.id_evento}`
+        );
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          setData(response.data);
+          setRenderizado(true);
+        }
+      } catch (error) {
+        alert(error);
+      }
+      setLoading(false);
+    }
+    ConsultaTerminal();
+  }, [dadosEvento.id_evento, dadosEvento.id_terminal, renderizado]);
+
+  function handleFechaNovoLancamento() {
+    setIsLancamentoVisible(false);
+    setRenderizado(false);
+  }
+
+  // useEffect(() => {
+  //   if (constcallScreen === 'true') {
+  //     setIsLancamentoVisible(true);
+  //   }
+  // }, [constcallScreen]);
 
   return (
     <Background>
       {renderizado ? (
         <>
           <View style={styles.Container}>
-            <Text style={styles.Titulo}>Dados do Cartão</Text>
+            <TouchableOpacity onPress={() => setIsLancamentoVisible(true)}>
+              <Text>Clica aqui</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.Titulo}>Dados do Terminal</Text>
             <View style={styles.linhaSeparacao} />
             <View style={styles.ContainerMain}>
               <View style={styles.linhaSeparacao} />
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center' }}>
-                  <DadosCartao data={data} />
+                  <DadosTerminal data={data} />
                   <View style={styles.linhaSeparacao} />
-                  <Text style={styles.Titulo}>Extrato do Cartão</Text>
+                  <Text style={styles.Titulo}>Lançamentos do Terminal</Text>
                   <View style={styles.linhaSeparacao} />
-                  {data.extrato.length === 0 ? (
+                  {data.lancamentos.length === 0 ? (
                     <View style={styles.ContainerSemMovimentacoes}>
                       <Text style={styles.TextoSemMovimentacao}>
-                        === Cartão sem Movimentação ===
+                        === Terminal sem Lançamentos ===
                       </Text>
                     </View>
                   ) : (
-                    <Container>
-                      <List
-                        data={data.extrato}
-                        keyExtractor={item => String(item.id)}
-                        renderItem={({ item }) => (
-                          <Extrato
-                            data={item}
-                            profile={perfilUsuario}
-                            cancel={() => cancelamento(item.id)}
-                          />
-                        )}
-                      />
-                    </Container>
-                  )}
+                      <Container>
+                        <List
+                          data={data.lancamentos}
+                          keyExtractor={item => String(item.id)}
+                          renderItem={({ item }) => (
+                            <ItemsLancamento
+                              data={item}
+                              profile={perfilUsuario}
+                              cancel={() => cancelamento(item.id)}
+                            />
+                          )}
+                        />
+                      </Container>
+                    )}
                 </View>
               </View>
             </View>
           </View>
-          <View style={styles.ContainerSaldo2}>
-            <View style={styles.ContainerSaldo}>
-              <Text style={styles.SaldoCartaoTitulo}>Saldo do Cartão</Text>
-              <Text
-                style={
-                  data.cartao.saldo === 0
-                    ? styles.SaldoCartaoValorZerado
-                    : styles.SaldoCartaoValorPositivo
-                }
-              >
-                R$ {Number(data.cartao.saldo).toFixed(2)}
-              </Text>
-            </View>
-          </View>
         </>
       ) : (
-        <View />
-      )}
+          <View />
+        )}
       <Mensagens
         type={dialogType}
         visible={isDialogVisible}
         message={dialogMessage}
         close={() => setisDialogVisible(false)}
       />
-      <Loading loading={loading} message="Consultando Cartão..." />
+      <Loading loading={loading} message="Consultando Terminal..." />
+      <Lancamentos
+        visible={isLancamentoVisible}
+        dadosEvento={dadosEvento}
+        close={() => handleFechaNovoLancamento()}
+      />
     </Background>
   );
 }
@@ -157,6 +161,13 @@ LancamentosCaixa.navigationOptions = ({ navigation }) => ({
       <Icon name="arrow-back" size={30} color={Colors.COLORS.WHITE} />
     </TouchableOpacity>
   ),
+  headerRight: () => (
+    <>
+      <TouchableOpacity onPress={() => navigation.navigate('Principal')}>
+        <Icon name="add" size={30} color={Colors.COLORS.WHITE} />
+      </TouchableOpacity>
+    </>
+  ),
 });
 
 const styles = StyleSheet.create({
@@ -165,7 +176,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.COLORS.GRAY,
     alignItems: 'center',
-    marginTop: 15,
+    marginVertical: 15,
     marginHorizontal: 10,
     borderRadius: 10,
   },
