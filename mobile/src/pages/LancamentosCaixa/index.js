@@ -99,20 +99,20 @@ export default function LancamentosCaixa({ navigation }) {
                       </Text>
                     </View>
                   ) : (
-                      <Container>
-                        <List
-                          data={data.extrato}
-                          keyExtractor={item => String(item.id)}
-                          renderItem={({ item }) => (
-                            <Extrato
-                              data={item}
-                              profile={perfilUsuario}
-                              cancel={() => cancelamento(item.id)}
-                            />
-                          )}
-                        />
-                      </Container>
-                    )}
+                    <Container>
+                      <List
+                        data={data.extrato}
+                        keyExtractor={item => String(item.id)}
+                        renderItem={({ item }) => (
+                          <Extrato
+                            data={item}
+                            profile={perfilUsuario}
+                            cancel={() => cancelamento(item.id)}
+                          />
+                        )}
+                      />
+                    </Container>
+                  )}
                 </View>
               </View>
             </View>
@@ -133,8 +133,8 @@ export default function LancamentosCaixa({ navigation }) {
           </View>
         </>
       ) : (
-          <View />
-        )}
+        <View />
+      )}
       <Mensagens
         type={dialogType}
         visible={isDialogVisible}

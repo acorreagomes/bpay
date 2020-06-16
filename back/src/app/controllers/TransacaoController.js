@@ -29,8 +29,7 @@ class TransacaoController {
       req.body.tipo_operacao_credito = req.body.tipo_operacao_credito.toUpperCase();
     }
 
-    const validTypes = ["CREDITO", "DEBITO", "CARTAO",
-      "DINHEIRO", "SALDO_INICIAL", "SANGRIA", "SUPRIMENTO"];
+    const validTypes = ["CREDITO", "DEBITO", "CARTAO", "DINHEIRO"];
     if ((validTypes.indexOf(req.body.forma_pagamento) == -1) ||
       (validTypes.indexOf(req.body.tipo_operacao_cartao) == -1) ||
       (validTypes.indexOf(req.body.tipo_transacao) == -1)) {

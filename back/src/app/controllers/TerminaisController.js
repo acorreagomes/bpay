@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import Terminais from '../models/Terminais';
 import Transacoes from '../models/Transacoes';
+import Usuario from '../models/Usuarios';
+import Setor from '../models/Setores';
 
 class TerminaisController {
 
@@ -25,22 +27,59 @@ class TerminaisController {
   }
 
   async lancamentos(req, res) {
-    const dadosTerminal = await Terminais.findOne({ 
-    where: {id : req.query.id_terminal},
-    attributes: ['id', 'endereco_mac', 'modelo', 'fabricante'],
+
+    const setor = await Setor.findAll({ where: { id_evento: req.query.id_evento } });
+    const setoresCodigo = [];
+    setor.map(setores => setoresCodigo.push(setores.id));
+
+    const dadosTerminal = await Terminais.findOne({
+    where: { id : req.query.id_terminal },
+    attributes:
+     [
+       'id',
+       'endereco_mac',
+       'modelo',
+       'fabricante'
+     ],
     })
     if (!dadosTerminal) {
       return res.status(200).json({ error: 'Terminal não Encontrado' });
     };
-    // where: { id_terminal: req.query.id_terminal, id_evento: req.query.id_evento}});  pegar depois os eventos dos setores
-    const lancamentosTerminal = await Transacoes.findAll({ 
-      
-      where: { id_terminal: req.query.id_terminal}});
+    const lancamentosTerminal = await Transacoes.findAll({
+      where: {
+        id_terminal: req.query.id_terminal,
+        id_setor: setoresCodigo,
+        tipo_transacao:
+        [
+          "SANGRIA",
+          "SUPRIMENTO",
+          "SALDO_INICIAL"
+        ],
+       },
+      attributes:
+      [
+        'id',
+        'valor_transacao',
+        'tipo_transacao',
+        'cancelada',
+        'descricao_sangria_suprimentos'
+      ],
+      include: [
+      {
+        model: Usuario, as: 'usuario',
+        attributes: ['id', 'nome'],
+      },
+      {
+        model: Setor, as: 'setor',
+        attributes: ['id', 'nome_setor'],
+      }
+      ],
+      order: ['id']});
+
     res.json({
       'terminal': dadosTerminal,
       'lancamentos': lancamentosTerminal,
-    });  
-    // Depois trazer somente os campos necessários dos lançamentos e somente 'SANGRIA', 'SUPRIMENTOS', 'SALDO_INICIAL'
+    });
   }
 
 }
