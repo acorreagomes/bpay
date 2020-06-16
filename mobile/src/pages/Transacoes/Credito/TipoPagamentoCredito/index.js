@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import Background from '~/components/Background';
 import api from '~/services/api';
 import Funcoes from '~/utils/Funcoes';
@@ -283,3 +284,11 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
+
+TipoPagamentoCredito.propTypes = {
+  navigation: PropTypes.string,
+};
+
+TipoPagamentoCredito.defaultProps = {
+  navigation: '',
+};

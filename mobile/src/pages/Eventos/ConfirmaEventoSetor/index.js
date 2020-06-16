@@ -7,6 +7,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import Funcoes from '~/utils/Funcoes';
 import Background from '~/components/Background';
 import Colors from '~/constants/Colors';
@@ -267,3 +268,11 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
+
+ConfirmaEventoSetor.propTypes = {
+  navigation: PropTypes.string,
+};
+
+ConfirmaEventoSetor.defaultProps = {
+  navigation: '',
+};

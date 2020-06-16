@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import RelatoriosComponente from '~/components/Relatorios';
@@ -243,3 +244,11 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
+
+Relatorios.propTypes = {
+  navigation: PropTypes.string,
+};
+
+Relatorios.defaultProps = {
+  navigation: '',
+};

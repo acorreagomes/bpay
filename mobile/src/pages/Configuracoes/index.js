@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import Background from '~/components/Background';
 import Colors from '~/constants/Colors';
 
@@ -56,3 +57,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+Configuracoes.propTypes = {
+  navigation: PropTypes.string,
+};
+
+Configuracoes.defaultProps = {
+  navigation: '',
+};

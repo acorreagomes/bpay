@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DeviceInfo from 'react-native-device-info';
@@ -10,7 +11,6 @@ import AnimatedLoader from 'react-native-animated-loader';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import { signOut } from '~/store/modules/auth/actions';
-import LancamentosCaixa from '~/pages/LancamentosCaixa';
 import Funcoes from '~/utils/Funcoes';
 import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
@@ -332,7 +332,7 @@ export default function Principal({ navigation }) {
   );
 }
 
-Principal.navigationOptions = ({ navigation }) => ({
+Principal.navigationOptions = () => ({
   title: '',
 });
 
@@ -439,3 +439,11 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
+
+Principal.propTypes = {
+  navigation: PropTypes.string,
+};
+
+Principal.defaultProps = {
+  navigation: '',
+};

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import Toast from 'react-native-toast-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import PropTypes from 'prop-types';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import ItemsLancamento from '~/components/ItemsLancamento';
@@ -79,12 +80,6 @@ export default function LancamentosCaixa({ navigation }) {
     setIsLancamentoVisible(false);
     setRenderizado(false);
   }
-
-  // useEffect(() => {
-  //   if (constcallScreen === 'true') {
-  //     setIsLancamentoVisible(true);
-  //   }
-  // }, [constcallScreen]);
 
   return (
     <Background>
@@ -239,3 +234,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
+LancamentosCaixa.propTypes = {
+  navigation: PropTypes.string,
+};
+
+LancamentosCaixa.defaultProps = {
+  navigation: '',
+};
