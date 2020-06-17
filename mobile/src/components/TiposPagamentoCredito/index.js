@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-
 import { Container, Left, Info, Descricao, Detalhes } from './styles';
 
 export default function ListaTiposPagamentoCredito({ data, onCancel }) {
@@ -21,5 +20,5 @@ export default function ListaTiposPagamentoCredito({ data, onCancel }) {
 
 ListaTiposPagamentoCredito.propTypes = {
   data: PropTypes.objectOf().isRequired,
-  onCancel: PropTypes.func().isRequired,
+  onCancel: PropTypes.func.isRequired,
 };

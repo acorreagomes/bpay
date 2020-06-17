@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import Setores from '~/components/Setores';
@@ -168,11 +167,3 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
-
-SelecionaSetor.propTypes = {
-  navigation: PropTypes.string,
-};
-
-SelecionaSetor.defaultProps = {
-  navigation: '',
-};

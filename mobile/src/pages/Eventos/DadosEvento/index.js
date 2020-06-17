@@ -9,7 +9,6 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import Funcoes from '~/utils/Funcoes';
 import api from '~/services/api';
 import Background from '~/components/Background';
@@ -422,11 +421,3 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
-
-DadosEvento.propTypes = {
-  navigation: PropTypes.string,
-};
-
-DadosEvento.defaultProps = {
-  navigation: '',
-};

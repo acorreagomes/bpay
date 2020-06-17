@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container, Left, Info, NomeSetor, ValorSetor } from './styles';
 
@@ -14,3 +15,7 @@ export default function Relatorios({ data }) {
     </Container>
   );
 }
+
+Relatorios.propTypes = {
+  data: PropTypes.objectOf().isRequired,
+};

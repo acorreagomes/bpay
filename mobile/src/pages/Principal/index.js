@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import DeviceInfo from 'react-native-device-info';
@@ -439,11 +438,3 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
-
-Principal.propTypes = {
-  navigation: PropTypes.string,
-};
-
-Principal.defaultProps = {
-  navigation: '',
-};

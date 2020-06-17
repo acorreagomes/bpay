@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import Background from '~/components/Background';
 import Eventos from '~/components/Eventos';
 import { Container, List } from './styles';
@@ -154,11 +153,3 @@ const styles = StyleSheet.create({
     width: 210,
   },
 });
-
-SelecionaEvento.propTypes = {
-  navigation: PropTypes.string,
-};
-
-SelecionaEvento.defaultProps = {
-  navigation: '',
-};

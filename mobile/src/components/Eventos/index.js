@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import { Container, Left, Info, NomeEvento, DataHorario } from './styles';
 
@@ -19,3 +20,8 @@ export default function Eventos({ data, onCancel }) {
     </Container>
   );
 }
+
+Eventos.propTypes = {
+  data: PropTypes.objectOf().isRequired,
+  onCancel: PropTypes.func.isRequired,
+};

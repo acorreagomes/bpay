@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import NumericInput from '@wwdrew/react-native-numeric-textinput';
 import Background from '~/components/Background';
 import api from '~/services/api';
@@ -334,11 +333,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-TransacoesCreditoValorPagamento.propTypes = {
-  navigation: PropTypes.string,
-};
-
-TransacoesCreditoValorPagamento.defaultProps = {
-  navigation: '',
-};

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import Toast from 'react-native-toast-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import PropTypes from 'prop-types';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import Extrato from '~/components/Extrato';
@@ -230,11 +229,3 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-
-Cartao.propTypes = {
-  navigation: PropTypes.string,
-};
-
-Cartao.defaultProps = {
-  navigation: '',
-};

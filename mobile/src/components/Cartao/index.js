@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Container, Titulo, Valor } from './styles';
 
@@ -28,3 +29,7 @@ export default function Cartao({ data }) {
     </>
   );
 }
+
+Cartao.propTypes = {
+  data: PropTypes.objectOf().isRequired,
+};

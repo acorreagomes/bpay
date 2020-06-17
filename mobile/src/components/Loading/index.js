@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
 import PropTypes from 'prop-types';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Colors from '~/constants/Colors';
 
 export default function Loading({ loading, message }) {

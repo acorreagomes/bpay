@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Container, Left, Info, Descricao, Detalhes } from './styles';
 import Pergunta from '~/components/Pergunta';
@@ -57,3 +58,9 @@ export default function ItemsLancamento({ data, profile, cancel }) {
     </>
   );
 }
+
+ItemsLancamento.propTypes = {
+  data: PropTypes.objectOf().isRequired,
+  profile: PropTypes.objectOf().isRequired,
+  cancel: PropTypes.func.isRequired,
+};
