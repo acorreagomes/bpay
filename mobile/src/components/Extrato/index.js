@@ -57,7 +57,7 @@ export default function Extrato({ data, profile, cancel }) {
 }
 
 Extrato.propTypes = {
-  data: PropTypes.objectOf().isRequired,
-  profile: PropTypes.objectOf().isRequired,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  profile: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   cancel: PropTypes.func.isRequired,
 };

@@ -22,6 +22,6 @@ export default function Eventos({ data, onCancel }) {
 }
 
 Eventos.propTypes = {
-  data: PropTypes.objectOf().isRequired,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   onCancel: PropTypes.func.isRequired,
 };

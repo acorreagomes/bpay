@@ -31,5 +31,5 @@ export default function Cartao({ data }) {
 }
 
 Cartao.propTypes = {
-  data: PropTypes.objectOf().isRequired,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
 };
