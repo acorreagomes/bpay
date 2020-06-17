@@ -10,7 +10,7 @@ import Mensagens from '~/components/Mensagens';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
-export default function Login({ navigation }) {
+export default function Login() {
   const dispatch = useDispatch();
   const passwordRef = useRef();
   const [email, setEmail] = useState('');

@@ -10,7 +10,6 @@ import AnimatedLoader from 'react-native-animated-loader';
 import api from '~/services/api';
 import Background from '~/components/Background';
 import { signOut } from '~/store/modules/auth/actions';
-import LancamentosCaixa from '~/pages/LancamentosCaixa';
 import Funcoes from '~/utils/Funcoes';
 import Imagens from '~/constants/Images';
 import Colors from '~/constants/Colors';
@@ -332,7 +331,7 @@ export default function Principal({ navigation }) {
   );
 }
 
-Principal.navigationOptions = ({ navigation }) => ({
+Principal.navigationOptions = () => ({
   title: '',
 });
 
