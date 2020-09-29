@@ -12,7 +12,7 @@ import { Container, Content, Profile } from './styles';
 
 export default function Header() {
   const dispatch = useDispatch();
-  const usuarioLogado = useSelector((state) => state.user.profile.nome);
+  const usuarioLogado = 'ALESSANDRO';  //useSelector((state) => state.user.profile.nome);
   const usuario = usuarioLogado.split(' ').slice(0, 2).join(' ');
   function handleLoggout() {
     dispatch(signOut());

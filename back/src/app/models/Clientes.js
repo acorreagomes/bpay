@@ -4,7 +4,9 @@ class Cliente extends Model {
   static init(sequelize) {
     super.init({
       nome: Sequelize.STRING,
-      documento: Sequelize.STRING,
+      cpf: Sequelize.STRING,
+      telefone: Sequelize.STRING,
+      email: Sequelize.STRING,
     }, {
       sequelize,
     });

@@ -20,8 +20,11 @@ routes.use(authMiddleware);
 
 routes.put('/usuarios', UsuarioController.update);
 
-routes.get('/clientes/:documento', ClienteController.index);
+routes.get('/clientes', ClienteController.indexAll);
+routes.get('/clientes/:id', ClienteController.index);
+routes.get('/clientes/:cpf/cpf', ClienteController.indexCPF);
 routes.post('/clientes', ClienteController.store);
+routes.put('/clientes/:id', ClienteController.update);
 
 routes.post('/transacoes', TransacaoController.store);
 routes.post('/transacoes/caixa', TransacaoController.storeAnothers);

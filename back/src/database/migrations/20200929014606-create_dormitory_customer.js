@@ -1,31 +1,31 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('usuarios_setores', {
-      id_usuario: {
+    return queryInterface.createTable('dormitorios_cliente', {
+      id_dormitorio: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
-      id_setor: {
+      id_cliente: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       }
-    }).then(() => queryInterface.addConstraint('usuarios_setores', ['id_usuario'], {
+    }).then(() => queryInterface.addConstraint('dormitorios_cliente', ['id_dormitorio'], {
       type: 'FOREIGN KEY',
-      name: 'FK_UsuariosSetoresIdUsuario_Usuarios',
+      name: 'FK_DormitoriosClienteIdDormitorio_dormitorios',
       references: {
-        table: 'usuarios',
+        table: 'dormitorios',
         field: 'id',
       },
       onDelete: 'no action',
       onUpdate: 'no action',
     }))
-    .then(() => queryInterface.addConstraint('usuarios_setores', ['id_setor'], {
+    .then(() => queryInterface.addConstraint('dormitorios_cliente', ['id_cliente'], {
       type: 'FOREIGN KEY',
-      name: 'FK_UsuariosSetoresIdSetor_Setores',
+      name: 'FK_DormitoriosClienteIdCliente_Clientes',
       references: {
-        table: 'setores',
+        table: 'clientes',
         field: 'id',
       },
       onDelete: 'no action',
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('usuarios_setores');
+    return queryInterface.dropTable('dormitorios_cliente');
   }
 };
 

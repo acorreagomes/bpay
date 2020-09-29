@@ -16,7 +16,7 @@ class ProdutorController {
 
     const produtorExists = await Produtor.findOne({ where: { cnpj: req.body.cnpj } });
     if (produtorExists) {
-      return res.status(400).json({ error: 'Duplicidade de Documento CNPJ' });
+      return res.status(400).json({ error: 'Duplicidade de documento CNPJ' });
     }
 
     const produtor = await Produtor.create(req.body);

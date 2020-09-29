@@ -147,7 +147,7 @@ class CartaoController {
       include: [
         {
           model: Cliente, as: 'cliente',
-          attributes: ['id', 'nome', 'documento'],
+          attributes: ['id', 'nome', 'cpf', 'telefone', 'email'],
         }
       ]
     });
